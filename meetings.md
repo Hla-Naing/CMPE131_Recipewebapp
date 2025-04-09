@@ -1,16 +1,15 @@
 ## Meetings
-### date at time
+### 2023-10-01 at 10:30
 - Who attended the meeting
-- Name: 
-- Team updates // updates, future plan, help required cases
-- 
-- Hla worked on <--> . Will work on <--->  next.
-- Daniel worked on <--> . Will work on <--->  next.
-- Kris worked on <--> . Will work on <--->  next.
-- Cedric worked on <--> . Will work on <--->  next.
-
+- Team updates (15min or less)
+- <name> worked on X. Will work on Y next.
 - pair-programming (optional) (25 mins)
 
 - Summarize group progress
+
+### 2023-10-08 at 13:30
+
+
+### 2023-10-15 at 10:30
 
 
