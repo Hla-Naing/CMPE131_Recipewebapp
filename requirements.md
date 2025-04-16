@@ -2,6 +2,7 @@
 
 ## Functional Requirements
 1. <write User Registration requirement here (Daniel)>
+   The system shall allow a visitor to create an account by providing a username, email address, and password.
 2. <write User Login requirement here (Daniel)>
 3. <write User Logout requirement here (Daniel)>
 4. <write Edit Recipe requirement here (Cedric)>
