@@ -1,10 +1,12 @@
-## <remove all of the example text and notes in < > such as this one>
 
 ## Functional Requirements
-1. <write User Registration requirement here (Daniel)>
-   The system shall allow a visitor to create an account by providing a username, email address, and password.
-2. <write User Login requirement here (Daniel)>
-3. <write User Logout requirement here (Daniel)>
+
+1. A visitor can create an account by providing a username, email, and password.
+
+2. Registered users can log in using their email and password.
+
+3. Logged-in users can log out of their account securely.
+
 4. <write Edit Recipe requirement here (Cedric)>
 5. <write Delete Recipe requirement here (Cedric)>
 6. <write Create Recipe requirement here (Cedric)>
@@ -23,78 +25,65 @@
 15.The system allows the user to search for recipe by titles
 
 
-## Use Cases <Add name of who will write (this specific requirement) and implement (in subsequent milestones) the use case below>
+## Use Cases 
+
 1. User Registration(Daniel)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The visitor is on the login page.
+- **Trigger:** The visitor decides to create an account and clicks the "Register" button.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The visitor navigates to the registration page.
+        2. The visitor enters a desired username in the username field.
+        3. The visitor enters their email address in the email field.
+        4. The visitor enters a password in the password field.
+        5. The visitor clicks the "Sign Up" button.
+        6. The system validates the entered information (e.g., checks for unique username and email).
+        7. If the information is valid, the system creates a new account for the visitor.
+- **Primary Postconditions:** 
+        1. The visitor's account is successfully created.
+        2. The visitor can log in using their new account credentials.
+- **Alternate Sequence:** 
+        1. If the entered username is already taken: 
+              i. The system displays an error message indicating the username is not available.
+              ii. The visitor is prompted to enter a different username. 
+- **Alternate Sequence <optional>:** 
+        1. If the entered email address is already taken: 
+              i. The visitor is prompted to enter another email address.
+              ii. Alternative, if the email was already registered, the visitor is prompted to retrieve the password by clicking on “Forgot Password” link on the login page.
 
 2. User Login(Daniel)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user has a registered account with a valid email and password.
+- **Trigger:** The user navigates to the login page and attempts to log in.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The user navigates to the login page.
+        2. The user enters their registered email address in the email field.
+        3. The user enters their password in the password field.
+        4. The user clicks the "Login" button.
+        5. The system verifies the email address and password against the database.
+        6. If the email and password are correct, the system logs the user in.
+- **Primary Postconditions:** 
+        1. The user is successfully logged into the app.
+- **Alternate Sequence:** 
+        1. If the user enters an incorrect email or password: 
+              i. The system displays an error message indicating the login credentials are invalid.
+              ii. The user is prompted to re-enter their email and password.
+              iii. The user attempts to log in again.  
 
 3. User Logout(Daniel)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user is logged into the app.
+- **Trigger:** The user clicks the logout button.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The user clicks the logout button.
+        2. The system displays a confirmation dialog asking if the user is sure they want to log out.
+        3. The user reviews the confirmation dialog.
+        4. The user clicks the "Confirm" button to proceed with the logout.
+        5. The system logs the user out.
+- **Primary Postconditions:** 
+        1. The user is redirected to the home page.
+- **Alternate Sequence:** 
+        1. If the user clicks the "Cancel" button in the confirmation dialog:
+              i. The system cancels the logout process. 
+              ii. The user remains logged into the app. 
+              iii. The user continues using the app without interruption. 
 
 4. Edit Recipe(Cedric)
 - **Pre-condition:** <can be a list or short description>
