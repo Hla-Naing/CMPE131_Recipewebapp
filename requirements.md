@@ -24,6 +24,11 @@
 
 15.The system allows the user to search for recipe by titles
 
+## EXTRA Functional Requirements
+
+16. The system shall ensure that the user's password meets predefined strength criteria.
+
+17. The system shall provide the first three characters of the user's password as a hint when the user selects the "Forgot Password" option.
 
 ## Use Cases 
 
@@ -41,11 +46,11 @@
 - **Primary Postconditions:** 
         1. The visitor's account is successfully created.
         2. The visitor can log in using their new account credentials.
-- **Alternate Sequence:** 
+- **Alternate Sequence 1:** 
         1. If the entered username is already taken: 
               i. The system displays an error message indicating the username is not available.
               ii. The visitor is prompted to enter a different username. 
-- **Alternate Sequence <optional>:** 
+- **Alternate Sequence 2:** 
         1. If the entered email address is already taken: 
               i. The visitor is prompted to enter another email address.
               ii. Alternative, if the email was already registered, the visitor is prompted to retrieve the password by clicking on “Forgot Password” link on the login page.
@@ -351,4 +356,44 @@
         i. the system displays an error message saying that recipe doesn’t exist or not being saved
         
         ii.the system allows the user to try again or shows the closet match 
+
+16. Password Strength Check(Daniel)
+- **Pre-condition:** The user is on the registration page and has entered a password.
+- **Trigger:** The user submits the registration form.
+- **Primary Sequence:**
+        1. The user enters their desired password in the registration form.
+        2. The user submits the registration form.
+        3. The system checks the password against predefined strength criteria (e.g., minimum length, inclusion of numbers).
+        4. If the password meets the criteria, the system proceeds with the registration process.
+- **Primary Postconditions:** 
+        1. The user is successfully registered in the system.
+- **Alternate Sequence:** 
+        1. If the user fails to meet the password criteria after multiple attempts:  
+              i. The system provides tips for creating a strong password.  
+              ii. The user enters a new password based on the suggestions. 
+              iii. The system rechecks the new password.
+
+17. Forgot Password(Daniel)
+- **Pre-condition:** The user is on the login page and has forgotten their password.
+- **Trigger:** The user selects the "Forgot Password" option.
+- **Primary Sequence:**
+        1. The user clicks the "Forgot Password" link on the login page.
+        2. The system prompts the user to enter their registered email address.
+        3. The user enters their email address and submits the form.
+        4. The system verifies the email address against the database.
+        5. If the email address is valid, the system retrieves the user's password.
+        6. The system displays the first three characters of the password as a hint to the user.
+        7. The user uses the hint to recall their password.
+        8. The user enters the recalled password on the login page.
+        9. The system verifies the entered password.
+        10. If the password is correct, the user is successfully logged in.
+- **Primary Postconditions:**
+        1. The user is logged into the system.
+        2. The user can now access the app's features and functionalities.
+- **Alternate Sequence:**
+        1. If the user enters an invalid email address:     
+              i. The system displays an error message indicating the email address is not registered.  
+              ii. The user is prompted to enter a valid registered email address.
+
+
 
