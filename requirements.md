@@ -333,10 +333,10 @@
      2. The users can click on each recipe to view the detailed information
      3. The users can also go back to the filter section to choose more category or restart the filter.
 - **Alternate Sequence:**
--    1.If the system cannot match the category to the recipes saved in the database
+-    1. If the system cannot match the category to the recipes saved in the database
         i. The system displays an error message
         ii.The system allows the user to filter again or to create a new recipe for the chosen category
-
+        
 15. Search Recipe(Hla)
 - **Pre-condition:**  The recipe exists in the system database. 
 - **Trigger:** The user enters the recipe title on the search bar.
@@ -351,7 +351,7 @@
 -    1. The system displays the recipe that the user wants to search
      2. The system allows the user to view that recipe (referenced to view recipe use case)
 - **Alternate Sequence:**
--    1.If the system cannot find the recipe
+-    1. If the system cannot find the recipe
         i. the system displays an error message saying that recipe doesn’t exist or not being saved
         ii.the system allows the user to try again or shows the closet match 
 
