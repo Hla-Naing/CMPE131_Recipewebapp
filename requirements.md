@@ -22,9 +22,7 @@
 
 15.The system allows the user to search for recipe by titles
 
-<using the syntax [](images/ui1.png) add images in a folder called images/ and place sketches of your webpages>
 
-<each of the 14 requirements will have a use case associated with it>
 ## Use Cases <Add name of who will write (this specific requirement) and implement (in subsequent milestones) the use case below>
 1. User Registration(Daniel)
 - **Pre-condition:** <can be a list or short description>
@@ -331,9 +329,9 @@
      4. The user clicks filter button on the page
      5. The user clicks filter button on the page
 - **Primary Postconditions:**
--    1.The system displays filtered recipes.
--    2.The users can click on each recipe to view the detailed information
--    3.The users can also go back to the filter section to choose more category or restart the filter.
+-    1. The system displays filtered recipes.
+     2. The users can click on each recipe to view the detailed information
+     3. The users can also go back to the filter section to choose more category or restart the filter.
 - **Alternate Sequence:**
 -    1.If the system cannot match the category to the recipes saved in the database
         i. The system displays an error message
@@ -343,15 +341,15 @@
 - **Pre-condition:**  The recipe exists in the system database. 
 - **Trigger:** The user enters the recipe title on the search bar.
 - **Primary Sequence:**
--    1.The user goes to the search bar on the menu
--    2.The user enters the title of the recipe on the search bar
--    3.The user clicks the search button to begin searching for a specific recipe
--    4.The system process the user request and look for that recipe in the database
--    5.The system gets the recipe from the database
--    6.The system displays that certain recipe
+-    1. The user goes to the search bar on the menu
+     2. The user enters the title of the recipe on the search bar
+     3. The user clicks the search button to begin searching for a specific recipe
+     4. The system process the user request and look for that recipe in the database
+     5. The system gets the recipe from the database
+     6. The system displays that certain recipe
 - **Primary Postconditions:**
--    1.The system displays the recipe that the user wants to search
--    2.The system allows the user to view that recipe (referenced to view recipe use case)
+-    1. The system displays the recipe that the user wants to search
+     2. The system allows the user to view that recipe (referenced to view recipe use case)
 - **Alternate Sequence:**
 -    1.If the system cannot find the recipe
         i. the system displays an error message saying that recipe doesn’t exist or not being saved
