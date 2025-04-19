@@ -300,7 +300,9 @@
 - **Primary Postconditions:** The recipe is displayed to the user 
 - **Alternate Sequence:**
 -    1. The system cannot get recipe information from the database
-        i. The system displays an error message. 
+     
+        i. The system displays an error message.
+        
         ii.The system lets users go back to try again or go back to the main menu page where many f other saved recipes are displayed. 
 
 13. View All Recipes(Hla)
