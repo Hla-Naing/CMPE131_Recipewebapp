@@ -13,7 +13,8 @@
 9. <write Comment on Recipe requirement here (Kris)>
 10.<write View User Profile requirement here (Kris)>
 11.<write Edit User Profile requirement here (Kris)>
-12.<The system would allow users to view a chosen reciepe’s information>
+   
+12.The system would allow users to view a chosen reciepe’s information
 13.The system allows users to view all the recipes saved in the database.
 14.The system allows the users to Filter recipes depending on the category.
 15.The system allows the user to search for recipe by titles
