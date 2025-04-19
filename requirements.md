@@ -7,10 +7,14 @@
 
 3. Logged-in users can log out of their account securely.
 
-4. <write Edit Recipe requirement here (Cedric)>
-5. <write Delete Recipe requirement here (Cedric)>
-6. <write Create Recipe requirement here (Cedric)>
-7. <write Rate Recipe requirement here (Cedric)>
+4. The system will let the user edit the text that details the recipe, and then save it to the database.
+
+5. The system shall remove the recipe from the database it is stored in.
+
+6. The system will allow the user to add a new recipe to the database. 
+
+7. The system should show five stars on the UI and the User clicks on the respective star to rate the recipe. 
+
 8. Users can mark a recipe as saved/favorite for future access.
 9. Users can post comments onto existing recipes.
 10. User can access their own or another user’s profile page.
@@ -92,100 +96,69 @@
               iii. The user continues using the app without interruption. 
 
 4. Edit Recipe(Cedric)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user is currently logged in and viewing a recipe. Information about the recipe is displayed on the screen. There are options to edit or delete. 
+- **Trigger:** The user clicks on edit recipe button
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The system displays editable fields for the recipe details (title, ingredients, steps, etc.).
+	2. The user makes changes to the recipe text.
+	3. The user clicks the "Save" button.
+	4. The system validates the input and updates the recipe in the database.
+	5. The system displays a confirmation message and shows the updated recipe.
+
+- **Primary Postconditions:** The information in the recipe is changed and saved to the database (if saved). The updated recipe is displayed to the user.
+
+- **Alternate Sequence:** The user cancels any changes made
+        1.  The user clicks the "Cancel" button.
+	2. The system prompts for confirmation to discard changes.
+	3. Upon confirmation, the system returns to the recipe view without saving.
+
 
 5. Delete Recipe(Cedric)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user is currently logged in and viewing a recipe that they created. Information about the recipe is displayed on the screen. There are options to edit or delete. 
+- **Trigger:** The user clicks on the delete recipe button. 
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The system displays a confirmation dialog asking if the user wants to delete the recipe.
+	2. The user confirms deletion.
+	3. The system deletes the recipe from the database.
+	4. The system navigates the user back to the recipe list and shows a confirmation message.
+
+- **Primary Postconditions:** The recipe is removed from the database. The delete recipe can no longer be viewed. 
+- **Alternate Sequence:** The user cancels the deletion of the recipe
+        1. The user clicks "Cancel" in the confirmation dialog.
+	2. The system closes the dialog and the recipe remains unchanged.
+
 
 6. Create Recipe(Cedric)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user currently logged in and viewing a list of recipes. 
+- **Trigger:** The user clicks on the create recipe button.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The system displays a blank recipe form with fields for title, ingredients, and instructions.
+	2. The user fills in the recipe details.
+	3. The user clicks the "Save" button.
+	4. The system validates the input and adds the new recipe to the database. 
+	5. The system displays a confirmation message and shows the new recipe.
+
+- **Primary Postconditions:** A recipe is added to the database. It can be viewed by anyone. 
+- **Alternate Sequence:** If the user clicks the "Cancel" button in the confirmation dialog
+        1. The system prompts for confirmation to discard the recipe.
+	2. Upon confirmation, the system discards changes and returns to the recipe list.
+
 
 7. Rate Recipe(Cedric)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user is logged in and is currently viewing a recipe. 
+- **Trigger:** The user clicks on a star rating.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. The user clicks on a star to rate the recipe (1 to 5 stars).
+	2. The system captures the rating and stores it in the database.
+	3. The system updates the average rating of the recipe based on all user ratings.
+	4. The new average rating is displayed on the recipe page.
+
+- **Primary Postconditions:** The star rating on the recipe changes depending on how many users rate the recipe. New rating is saved. 
+- **Alternate Sequence:** User tries to rate without being logged in
+        1. The user clicks a star while not logged in.
+	2. The system prompts the user to log in or register.
+	3. After successful login, the system redirects back to the recipe so the user can rate it.
+
 
 8. Save Recipes(Kris)
 - **Pre-condition:** The user is logged in and able to view the recipe (not blocked or hidden from recipe creator).
