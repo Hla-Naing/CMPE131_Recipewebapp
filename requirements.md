@@ -11,18 +11,18 @@
 5. <write Delete Recipe requirement here (Cedric)>
 6. <write Create Recipe requirement here (Cedric)>
 7. <write Rate Recipe requirement here (Cedric)>
-8. <write Save Recipe requirement here (Kris)>
-9. <write Comment on Recipe requirement here (Kris)>
-10.<write View User Profile requirement here (Kris)>
-11.<write Edit User Profile requirement here (Kris)>
-   
-12.The system would allow users to view a chosen reciepe’s information
+8. Users can mark a recipe as saved/favorite for future access.
+9. Users can post comments onto existing recipes.
+10. User can access their own or another user’s profile page.
+11. The system will allow users to change the content displayed on their profile.
 
-13.The system allows users to view all the recipes saved in the database.
+12. The system would allow users to view a chosen reciepe’s information
 
-14.The system allows the users to Filter recipes depending on the category.
+13. The system allows users to view all the recipes saved in the database.
 
-15.The system allows the user to search for recipe by titles
+14. The system allows the users to Filter recipes depending on the category.
+
+15. The system allows the user to search for recipe by titles
 
 ## EXTRA Functional Requirements
 
@@ -30,6 +30,7 @@
 
 17. The system shall provide the first three characters of the user's password as a hint when the user selects the "Forgot Password" option.
 
+18. The user can edit display name, email, and password. ("EditAccount")
 ## Use Cases 
 
 1. User Registration(Daniel)
@@ -187,100 +188,68 @@
         3. ...
 
 8. Save Recipes(Kris)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user is logged in and able to view the recipe (not blocked or hidden from recipe creator).
+- **Trigger:** User selects “Save” button or symbol on recipe page.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. User selects “Save” button.
+        2. System adds route to recipe page into saved folder.
+        3. System displays a confirmation dialog showing their recipe has been saved and a button to the saved folder.
+        4. User exits dialog box and returns to page.
+- **Primary Postconditions:** User returns to the recipe page. Saved file can now be accessed from saved recipes folder.
+- **Alternate Sequence:** 
+        1. User selects “Save” button.
+        2. System displays error message that the page cannot be saved.
+        3. System returns user to recipe page.
 
 9. Comment on Recipes(Kris)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The user is logged in and able to view the recipe (not blocked or hidden from recipe creator).
+- **Trigger:** The user selects “Comment” button on recipe page.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. User selects “Comment” button.
+        2. System opens a text box under recipe.
+        3. User enters dialog into text box.
+        4. User selects “post comment” button.
+        5. System adds comment content and contributing username to bottom of page.
+- **Primary Postconditions:** Comment remains on page unless deleted or hidden by commenter or recipe creator.
+- **Alternate Sequence:** 
+        1. User selects “Comment” button.
+        2. System opens a text box under recipe.
+        3. User enters dialog into text box.
+        4. User selects “post comment” button.
+        5. System displays error message that comment could not be posted.
+        6. User is given the option to select “post comment” again.
 
 10. View User Profile(Kris)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+- **Pre-condition:** The owner of the profile has a preexisting account.
+- **Trigger:** User selects “profile” from system menu.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. User selects “profile” from system menu or username.
+        2. System matches username to profile number.
+        3. System loads route for profile dedicated to user.
+        4. System displays text description, images and/or recipes on page.
+- **Primary Postconditions:** User can access links to recipe pages directly from profile.
+- **Alternate Sequence:** 
+        1. User selects “profile” from system menu or username.
+        2. The user that matches the linked profile does not exist.
+        3. System displays an error message that the user does not exist or cannot be accessed.
+        4. User is redirected to the previous page.
 
-11. Edit User Profile(Kris)
-- **Pre-condition:** <can be a list or short description>
-- **Trigger:** <can be a list or short description>
+11. Edit User Profile - Display Info(Kris)
+- **Pre-condition:** The owner of the profile has a preexisting account and is logged into the system.
+- **Trigger:** From profile, user selects “Edit Profile” button.
 - **Primary Sequence:**
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Et sequi incidunt
-        3. Quis aute iure reprehenderit
-        4. ...
-        5. ...
-        6. ...
-        7. ...
-        8. ...
-        9. ...
-        10. <Try to stick to a max of 12 steps>
-- **Primary Postconditions:** <can be a list or short description>
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise and their outcomes>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-        1. Ut enim ad minim veniam, quis nostrum e
-        2. Ut enim ad minim veniam, quis nostrum e
-        3. ...
+        1. User selects “Edit Profile” button.
+        2. System displays text box with all current text inside.
+        3. User can add or remove text from within the text box.
+        4. User selects “save changes” button under text box.
+        5. System rewrites new text content in place of old content.
+- **Primary Postconditions:** Text content remains on page unless changed again.
+- **Alternate Sequence:** 
+        1. User selects “Edit Profile” button.
+        2. System displays text box with all current text inside.
+        3. User can add or remove text from within the text box.
+        4. User selects “save changes” button under text box.
+        5. System rewrites new text content in place of old content.
 
 12. View Recipe(Hla)
 - **Pre-condition:**  The recipe should be saved in the database
@@ -395,5 +364,21 @@
               i. The system displays an error message indicating the email address is not registered.  
               ii. The user is prompted to enter a valid registered email address.
 
-
+18. Edit User Profile - Personal Account Info (Kris)
+- **Pre-condition:** The owner of the profile has a preexisting account>- **Trigger:** From profile, user selects “Edit Profile” button.
+- **Trigger:** From profile, user selects “Edit Account” button.
+- **Primary Sequence:**
+        1. User selects “Edit Account” button.
+        2. System displays text boxes for current display name, email and password.
+        3. User can rewrite the entry for one of the boxes.
+        4. System prompts user to confirm change with another text box.
+        5. User reenters the same string.
+        6. System rewrites new content in place of old content.
+- **Primary Postconditions:** Text content remains on page unless changed again.
+- **Alternate Sequence:**
+        1. User selects “Edit Account” button.
+        2. System displays text boxes for current display name, email and password.
+        3. User can rewrite the entry for one of the boxes.
+        4. System displays error message if value is invalid or same as before.
+        5. User can rewrite entry again or select a different box.
 
