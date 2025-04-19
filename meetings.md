@@ -1,7 +1,10 @@
 ## Meetings
 ### 2025-04-15 at 13:37
-- First meeting: 04/15/25
-- Time: 1:30-2:00 pm
+- Attendance:
+-     1. Daniel
+-     2. Cedric
+-     3. Kris
+-     4. Hla
 - Teammate Responsibilities:
 -   1. Daniel Anaya: User Registration, User Login, and User Logout
     2. Cedric Meceda: Edit Recipe, Delete Recipe, Create Recipe, Rate Recipe
