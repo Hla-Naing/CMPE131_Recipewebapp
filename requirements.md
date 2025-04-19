@@ -36,7 +36,7 @@
 - **Pre-condition:** The visitor is on the login page.
 - **Trigger:** The visitor decides to create an account and clicks the "Register" button.
 - **Primary Sequence:**
-        1. The visitor navigates to the registration page.
+-       1. The visitor navigates to the registration page.
         2. The visitor enters a desired username in the username field.
         3. The visitor enters their email address in the email field.
         4. The visitor enters a password in the password field.
@@ -44,14 +44,14 @@
         6. The system validates the entered information (e.g., checks for unique username and email).
         7. If the information is valid, the system creates a new account for the visitor.
 - **Primary Postconditions:** 
-        1. The visitor's account is successfully created.
+-       1. The visitor's account is successfully created.
         2. The visitor can log in using their new account credentials.
 - **Alternate Sequence 1:** 
-        1. If the entered username is already taken: 
+-       1. If the entered username is already taken: 
               i. The system displays an error message indicating the username is not available.
               ii. The visitor is prompted to enter a different username. 
 - **Alternate Sequence 2:** 
-        1. If the entered email address is already taken: 
+-       1. If the entered email address is already taken: 
               i. The visitor is prompted to enter another email address.
               ii. Alternative, if the email was already registered, the visitor is prompted to retrieve the password by clicking on “Forgot Password” link on the login page.
 
@@ -59,16 +59,16 @@
 - **Pre-condition:** The user has a registered account with a valid email and password.
 - **Trigger:** The user navigates to the login page and attempts to log in.
 - **Primary Sequence:**
-        1. The user navigates to the login page.
+-       1. The user navigates to the login page.
         2. The user enters their registered email address in the email field.
         3. The user enters their password in the password field.
         4. The user clicks the "Login" button.
         5. The system verifies the email address and password against the database.
         6. If the email and password are correct, the system logs the user in.
 - **Primary Postconditions:** 
-        1. The user is successfully logged into the app.
+-       1. The user is successfully logged into the app.
 - **Alternate Sequence:** 
-        1. If the user enters an incorrect email or password: 
+-       1. If the user enters an incorrect email or password: 
               i. The system displays an error message indicating the login credentials are invalid.
               ii. The user is prompted to re-enter their email and password.
               iii. The user attempts to log in again.  
@@ -77,15 +77,15 @@
 - **Pre-condition:** The user is logged into the app.
 - **Trigger:** The user clicks the logout button.
 - **Primary Sequence:**
-        1. The user clicks the logout button.
+-       1. The user clicks the logout button.
         2. The system displays a confirmation dialog asking if the user is sure they want to log out.
         3. The user reviews the confirmation dialog.
         4. The user clicks the "Confirm" button to proceed with the logout.
         5. The system logs the user out.
 - **Primary Postconditions:** 
-        1. The user is redirected to the home page.
+-       1. The user is redirected to the home page.
 - **Alternate Sequence:** 
-        1. If the user clicks the "Cancel" button in the confirmation dialog:
+-       1. If the user clicks the "Cancel" button in the confirmation dialog:
               i. The system cancels the logout process. 
               ii. The user remains logged into the app. 
               iii. The user continues using the app without interruption. 
@@ -361,14 +361,14 @@
 - **Pre-condition:** The user is on the registration page and has entered a password.
 - **Trigger:** The user submits the registration form.
 - **Primary Sequence:**
-        1. The user enters their desired password in the registration form.
+-       1. The user enters their desired password in the registration form.
         2. The user submits the registration form.
         3. The system checks the password against predefined strength criteria (e.g., minimum length, inclusion of numbers).
         4. If the password meets the criteria, the system proceeds with the registration process.
 - **Primary Postconditions:** 
-        1. The user is successfully registered in the system.
+-       1. The user is successfully registered in the system.
 - **Alternate Sequence:** 
-        1. If the user fails to meet the password criteria after multiple attempts:  
+-       1. If the user fails to meet the password criteria after multiple attempts:  
               i. The system provides tips for creating a strong password.  
               ii. The user enters a new password based on the suggestions. 
               iii. The system rechecks the new password.
@@ -377,7 +377,7 @@
 - **Pre-condition:** The user is on the login page and has forgotten their password.
 - **Trigger:** The user selects the "Forgot Password" option.
 - **Primary Sequence:**
-        1. The user clicks the "Forgot Password" link on the login page.
+-       1. The user clicks the "Forgot Password" link on the login page.
         2. The system prompts the user to enter their registered email address.
         3. The user enters their email address and submits the form.
         4. The system verifies the email address against the database.
@@ -388,10 +388,10 @@
         9. The system verifies the entered password.
         10. If the password is correct, the user is successfully logged in.
 - **Primary Postconditions:**
-        1. The user is logged into the system.
+-       1. The user is logged into the system.
         2. The user can now access the app's features and functionalities.
 - **Alternate Sequence:**
-        1. If the user enters an invalid email address:     
+-       1. If the user enters an invalid email address:     
               i. The system displays an error message indicating the email address is not registered.  
               ii. The user is prompted to enter a valid registered email address.
 
