@@ -15,8 +15,11 @@
 11.<write Edit User Profile requirement here (Kris)>
    
 12.The system would allow users to view a chosen reciepe’s information
+
 13.The system allows users to view all the recipes saved in the database.
+
 14.The system allows the users to Filter recipes depending on the category.
+
 15.The system allows the user to search for recipe by titles
 
 <using the syntax [](images/ui1.png) add images in a folder called images/ and place sketches of your webpages>
