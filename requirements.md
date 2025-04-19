@@ -300,7 +300,7 @@
 - **Primary Postconditions:** The recipe is displayed to the user 
 - **Alternate Sequence:**
 -    1. The system cannot get recipe information from the database
-     
+   
         i. The system displays an error message.
         
         ii.The system lets users go back to try again or go back to the main menu page where many f other saved recipes are displayed. 
@@ -318,7 +318,9 @@
 - **Primary Postconditions:** The user is able to view all the saved recipes
 - **Alternate Sequence:**
 -    1. If the user hasn’t saved any recipe yet
+        
         i. the system displays “there is no recipe saved” notice.
+        
         ii. The system gives users an option  to create a new recipe
 
 14. Filter Recipes(Hla)
@@ -336,7 +338,9 @@
      3. The users can also go back to the filter section to choose more category or restart the filter.
 - **Alternate Sequence:**
 -    1. If the system cannot match the category to the recipes saved in the database
+        
         i. The system displays an error message
+        
         ii.The system allows the user to filter again or to create a new recipe for the chosen category
         
 15. Search Recipe(Hla)
@@ -354,6 +358,8 @@
      2. The system allows the user to view that recipe (referenced to view recipe use case)
 - **Alternate Sequence:**
 -    1. If the system cannot find the recipe
+        
         i. the system displays an error message saying that recipe doesn’t exist or not being saved
+        
         ii.the system allows the user to try again or shows the closet match 
 
