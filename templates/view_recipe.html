@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <article class="recipe-detail">
+    <h1>{{ recipe.title }}</h1>
+    <p class="meta">
+      by {{ recipe.author.username }}
+    </p>
+
+    <section class="description">
+      <p>{{ recipe.description }}</p>
+    </section>
+
+    <p><a href="{{ url_for('visitor_recipes') }}">← Back to all recipes</a></p>
+  </article>
+{% endblock %}
