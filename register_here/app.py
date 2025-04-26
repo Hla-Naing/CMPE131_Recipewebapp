@@ -1,7 +1,7 @@
 
 from flask import Flask, render_template, redirect, url_for, flash, session
-from register_here.forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm
-from register_here.models import db, User, Recipe
+from register_here.forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
+from register_here.models import db, User, Recipe, Profile
 from flask_login import login_user, logout_user, login_required, current_user
 
 app = Flask(__name__)
@@ -69,14 +69,21 @@ def make_recipe():
 @app.route('/profile', methods=['POST'])
 @login_required
 def view_profile():
-    form1 = ProfileForm()
-    form2 = Recipe.query.filter_by(user_id=current_user.id).all()
-    return render_template('profile.html',form1=form1,form2=form2)
+    profile = Profile.query.filter_by(user_id=current_user.id).all()
+    recipes = Recipe.query.filter_by(user_id=current_user.id).all()
+    return render_template('profile.html',profile=profile,recipes=recipes)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
+    #update database for display info on profile
     form = ProfileForm()
+    if form.validate_on_submit():
+        profile = Profile(id=form.id.data, username=form.username.data, bio=form.bio.data, user_id=current_user.id)
+        profile.bio = form.bio.data
+        db.session.commit()
+        flash("Profile updated.")
+        else flash("Changes could not be saved. Try again.")
     return render_template('edit_profile.html',form=form)
     
 @app.route('/logout')
