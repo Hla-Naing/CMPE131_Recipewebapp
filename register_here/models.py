@@ -19,10 +19,15 @@ class Recipe(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    author = db.relationship(
+        'User',
+        back_populates='recipes'
+    )
+
 
 #Users have individual display profiles tied to their account, which are optional to fill out.
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     bio = db.Column(db.Text, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

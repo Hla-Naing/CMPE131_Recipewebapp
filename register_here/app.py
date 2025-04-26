@@ -66,7 +66,7 @@ def make_recipe():
         return redirect(url_for('recipes'))
     return render_template('make_recipe.html', form=form)
 
-@app.route('/profile'), methods=['POST'])
+@app.route('/profile', methods=['POST'])
 @login_required
 def view_profile():
     form1 = ProfileForm()
