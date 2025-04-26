@@ -43,3 +43,8 @@ class RecipeForm(FlaskForm):
 class VisitorEmailForm(FlaskForm):
     email = StringField('Enter your Email', validators=[DataRequired(), Email()])
     submit = SubmitField('View Recipes')
+
+class ProfileForm(FlaskForm):
+    username = StringFIeld('Username', validators=[DataRequired(), Length(min=2, max=32)])
+    bio = StringField('User Bio')
+    submit = SubmitField('Update Profile')

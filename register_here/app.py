@@ -66,6 +66,19 @@ def make_recipe():
         return redirect(url_for('recipes'))
     return render_template('make_recipe.html', form=form)
 
+@app.route('/profile'), methods=['POST'])
+@login_required
+def view_profile():
+    form1 = ProfileForm()
+    form2 = Recipe.query.filter_by(user_id=current_user.id).all()
+    return render_template('profile.html',form1=form1,form2=form2)
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = ProfileForm()
+    return render_template('edit_profile.html',form=form)
+    
 @app.route('/logout')
 def logout():
     logout_user()
