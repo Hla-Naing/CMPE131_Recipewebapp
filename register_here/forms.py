@@ -2,7 +2,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from register_here.models import User
+from models import User
 
 def password_requirements(form, field):
     pw = field.data
@@ -38,6 +38,8 @@ class LoginForm(FlaskForm):
 class RecipeForm(FlaskForm):
     title = StringField('Recipe Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
+    ingredients = TextAreaField('Ingredients', validators=[DataRequired()])
+    instructions = TextAreaField('Instructions', validators=[DataRequired()])
     submit = SubmitField('Submit Recipe')
 
 class VisitorEmailForm(FlaskForm):
@@ -45,6 +47,7 @@ class VisitorEmailForm(FlaskForm):
     submit = SubmitField('View Recipes')
 
 class ProfileForm(FlaskForm):
-    username = StringFIeld('Username', validators=[DataRequired(), Length(min=2, max=32)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=32)])
     bio = StringField('User Bio')
     submit = SubmitField('Update Profile')
+                                           
