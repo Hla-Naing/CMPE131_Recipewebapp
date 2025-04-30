@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+    {% block title %}My Recipes{% endblock %}
+
+    {% block content %}
+    <h1>Welcome, {{ name }}!</h1>
+    
+    <h2>Your Saved Recipes</h2>
+    
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        {% for recipe in recipes %}
+        <tr>
+            <td><a href="{{ url_for('recipe_details', id=recipe.id) }}">{{ recipe.title }}</a></td>
+            <td>{{ recipe.description }}</td>
+            <td>
+                <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('make_recipe') }}">Add New Recipe</a></li>
+            <li><a href="{{ url_for('logout') }}">Press Here for Logout</a></li>
+        </ul>
+    </nav>
+
+    {% endblock %}
+
