@@ -83,7 +83,9 @@ def edit_profile():
         profile.bio = form.bio.data
         db.session.commit()
         flash("Profile updated.")
-        else flash("Changes could not be saved. Try again.")
+    else:
+        flash("Changes could not be saved. Try again.")
+
     return render_template('edit_profile.html',form=form)
     
 @app.route('/logout')
