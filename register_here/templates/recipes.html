@@ -1,0 +1,82 @@
+
+{% extends "base.html" %}
+
+    {% block title %}My Recipes{% endblock %}
+
+    {% block content %}
+    <h1>Welcome, {{ name }}!</h1>
+    
+    <h2>Your Saved Recipes</h2>
+    
+    <style>
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px; 
+        }
+
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        td {
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        td a {
+            font-weight: bold;
+            color: #0074D9;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .delete-button {
+            margin-top: 10px;
+        }
+
+        tr:hover td {
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+    </style>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for recipe in recipes %}
+        <tr>
+            <td><a href="{{ url_for('recipe_details', id=recipe.id) }}">{{ recipe.title }}</a></td>
+            <td><div style="max-width:500px;">{{ recipe.description }}</div></td>
+            <td>
+                <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" class="delete-button">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('make_recipe') }}">Add New Recipe</a></li>
+            <li><a href="{{ url_for('logout') }}">Press Here for Logout</a></li>
+        </ul>
+    </nav>
+
+    {% endblock %}
+

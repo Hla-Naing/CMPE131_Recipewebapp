@@ -38,6 +38,8 @@ class LoginForm(FlaskForm):
 class RecipeForm(FlaskForm):
     title = StringField('Recipe Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
+    ingredients = TextAreaField('Ingredients', validators=[DataRequired()])
+    instructions = TextAreaField('Instructions', validators=[DataRequired()])
     submit = SubmitField('Submit Recipe')
 
 class VisitorEmailForm(FlaskForm):
@@ -48,3 +50,4 @@ class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=32)])
     bio = StringField('User Bio')
     submit = SubmitField('Update Profile')
+                                           
