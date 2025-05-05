@@ -1,17 +1,19 @@
 
-from flask import Flask, render_template, redirect, url_for, flash, session
-from register_here.forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
-from register_here.models import db, User, Recipe, Profile
+from flask import Flask, Blueprint,render_template, redirect, url_for, flash, session
+from app.forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
+from app.models import db, User, Recipe, Profile
 from flask_login import login_user, logout_user, login_required, current_user
 
 app = Flask(__name__)
 app.secret_key = 'your_super_secret_key_here'
 
-@app.context_processor
+bp = Blueprint('main', __name__)
+
+@bp.context_processor
 def inject_user():
     return dict(current_user=current_user)
 
-@app.route('/', methods=['GET','POST'])
+@bp.route('/', methods=['GET','POST'])
 def home():
     form = VisitorEmailForm()
     if form.validate_on_submit():
@@ -19,14 +21,14 @@ def home():
         return redirect(url_for('visitor_recipes'))
     return render_template('home.html', form=form)
 
-@app.route('/visitor_recipes')
+@bp.route('/visitor_recipes')
 def visitor_recipes():
     if 'visitor_email' not in session:
         return redirect(url_for('home'))
     recipes = Recipe.query.all()
     return render_template('visitor_recipes.html', recipes=recipes)
 
-@app.route('/login', methods=['GET','POST'])
+@bp.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -38,7 +40,7 @@ def login():
             flash('Login Unsuccessful. Please check email and password.', 'danger')
     return render_template('login.html', form=form)
 
-@app.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -55,7 +57,7 @@ def recipes():
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
     return render_template('recipes.html', recipes=recipes)
 
-@app.route('/make_recipe', methods=['GET', 'POST'])
+@bp.route('/make_recipe', methods=['GET', 'POST'])
 @login_required
 def make_recipe():
     form = RecipeForm()
@@ -66,14 +68,14 @@ def make_recipe():
         return redirect(url_for('recipes'))
     return render_template('make_recipe.html', form=form)
 
-@app.route('/profile', methods=['POST'])
+@bp.route('/profile', methods=['POST'])
 @login_required
 def view_profile():
     profile = Profile.query.filter_by(user_id=current_user.id).all()
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
     return render_template('profile.html',profile=profile,recipes=recipes)
 
-@app.route('/edit_profile', methods=['GET', 'POST'])
+@bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     #update database for display info on profile
@@ -88,12 +90,13 @@ def edit_profile():
 
     return render_template('edit_profile.html',form=form)
     
-@app.route('/logout')
+@bp.route('/logout')
 def logout():
     logout_user()
     session.pop('visitor_email', None) 
     return redirect(url_for('home'))
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
