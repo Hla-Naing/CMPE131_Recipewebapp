@@ -1,8 +1,9 @@
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from .models import User
+from models import User
 
 def password_requirements(form, field):
     pw = field.data
@@ -40,7 +41,9 @@ class RecipeForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     ingredients = TextAreaField('Ingredients', validators=[DataRequired()])
     instructions = TextAreaField('Instructions', validators=[DataRequired()])
-    submit = SubmitField('Submit Recipe')
+    image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
+    remove_image = BooleanField('Remove current image') 
+    submit = SubmitField('Submit')
 
 class VisitorEmailForm(FlaskForm):
     email = StringField('Enter your Email', validators=[DataRequired(), Email()])

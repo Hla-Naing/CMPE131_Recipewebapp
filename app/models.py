@@ -1,5 +1,5 @@
 
-from . import db, login_manager
+from __init__ import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
 import pytz
@@ -26,8 +26,9 @@ class Recipe(db.Model):
     description = db.Column(db.Text, nullable=False)
     ingredients = db.Column(db.Text, nullable=True)  
     instructions = db.Column(db.Text, nullable=True)
+    image_filename = db.Column(db.String(120), nullable=True)
     created = db.Column(db.DateTime, default=get_local_time)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)    
 
     user = db.relationship('User', backref=db.backref('user_recipes', lazy=True))
 
