@@ -40,9 +40,7 @@ def home():
 
 @app.route('/visitor_recipes')
 def visitor_recipes():
-    if 'visitor_email' not in session:
-        return redirect(url_for('home'))
-    search_query = request.args.get('q', '')  
+    search_query = request.args.get('q', '')
     if search_query:
         recipes = Recipe.query.filter(Recipe.title.ilike(f'%{search_query}%')).all()
     else:
