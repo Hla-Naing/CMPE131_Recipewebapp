@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, url_for, flash, session, req
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
 from PIL import Image
-
+from sqlalchemy import or_
 from . import app, db, login_manager
 from .models import User, Recipe, Profile
 from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
@@ -42,7 +42,12 @@ def home():
 def visitor_recipes():
     search_query = request.args.get('q', '')
     if search_query:
-        recipes = Recipe.query.filter(Recipe.title.ilike(f'%{search_query}%')).all()
+        recipes = Recipe.query.filter(
+            or_(
+                Recipe.title.ilike(f'%{search_query}%'),
+                Recipe.ingredients.ilike(f'%{search_query}%')
+            )
+        ).all()
     else:
         recipes = Recipe.query.all()
     return render_template('visitor_recipes.html', recipes=recipes)
