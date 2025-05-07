@@ -5,7 +5,7 @@
 {% block content %}
 <h2>Edit Recipe</h2>
 
-<form method="POST" enctype="mulitpart/form-data">
+<form method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
 
     <p>
@@ -52,18 +52,20 @@
         const preview = document.getElementById('image-preview');
         const current = document.getElementById('current-image');
 
-        imageInput.addEventListener('change', function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                    preview.style.display = "block";
-                    if (current) current.style.display = "none";
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        if (imageInput && preview){        
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                        if (current) current.style.display = "none";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     });
     </script>
 

@@ -96,7 +96,8 @@ def make_recipe():
             title=form.title.data, 
             description=form.description.data,
             ingredients=form.ingredients.data,  
-            instructions=form.instructions.data, 
+            instructions=form.instructions.data,
+            image_filename=filename, 
             user_id=current_user.id
         )
         db.session.add(recipe)
