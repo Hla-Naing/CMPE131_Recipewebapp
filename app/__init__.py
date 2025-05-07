@@ -6,19 +6,23 @@ from flask_login import LoginManager
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+app = None
 
-# def create_app():
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+def create_app():
+    global app
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'your_secret_key'
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
 
-db.init_app(app)
-login_manager.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
 
-from app import routes
-app.register_blueprint(routes.bp)
+    from . import routes
 
-    # return app
+    with app.app_context():
+        db.create_all()
+
+    return app
 

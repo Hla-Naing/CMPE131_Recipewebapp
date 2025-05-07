@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from models import User
+from .models import User
 
 def password_requirements(form, field):
     pw = field.data

@@ -6,19 +6,9 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from werkzeug.utils import secure_filename
 from PIL import Image
 
-from app.forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
-from app.models import db, User, Recipe, Profile
-
-app = Flask(__name__)
-app.secret_key = 'your_super_secret_key_here'
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'site.db')
-db.init_app(app)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+from . import app, db, login_manager
+from .models import User, Recipe, Profile
+from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
 
 def save_resized_image(image_file, filename, size=(300, 300)):
     filepath = os.path.join(app.root_path, 'static/uploads', filename)
