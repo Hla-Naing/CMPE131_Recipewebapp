@@ -1,34 +1,46 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ recipe.title }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+{%block title %}{{ recipe.title }}{% endblock %}
+{% block content %}
     <h1>{{ recipe.title }}</h1>
+
+    {% if recipe.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' + recipe.image_filename) }}" alt="{{ recipe.title }}" style="width: 100%; max-width: 600px; height: auto; margin-top: 16px; border-radius: 8px;">
+    {% endif %}
+
     <p><strong>Description:</strong> {{ recipe.description }}</p>
+
+    {% if recipe.ingredients %}
     <p><strong>Ingredients:</strong></p>
     <ul>
         {% for ingredient in recipe.ingredients.split('\n') %}
-        <li>{{ ingredient }}</li>
+            <li>{{ ingredient }}</li>
         {% endfor %}
     </ul>
+    {% endif %}
+
+    {% if recipe.instructions %}
     <p><strong>Instructions:</strong></p>
     <ol>
         {% for instruction in recipe.instructions.split('\n') %}
-        <li>{{ instruction }}</li>
+            <li>{{ instruction }}</li>
         {% endfor %}
     </ol>
+    {% endif %}
+
     <p><strong>Created on:</strong> {{ recipe.created.strftime('%B %d, %Y at %I:%M %p') }}</p>
-    <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" style="display:inline;">
-        <button type="submit">Delete Recipe</button>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('show_recipes') }}">Back to Recipes</a></li>
-            <li><a href="{{ url_for('logout') }}">Press Here for Logout</a></li>
-        </ul>
-    </nav>
-</body>
-</html>
+
+    {% if current_user.is_authenticated and current_user.id == recipe.user_id %}
+        <div style="margin-top: 20px;">
+            <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+
+            <a href="{{ url_for('edit_recipe', id=recipe.id) }}">
+                <button style="margin-left: 10px;">Edit</button>
+            </a>
+        </div>
+    {% endif %}
+    {% endblock %}
+
 
