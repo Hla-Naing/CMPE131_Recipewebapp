@@ -1,4 +1,5 @@
 
+
 from . import db, login_manager
 from flask_login import UserMixin
 from datetime import datetime
@@ -29,8 +30,16 @@ class Recipe(db.Model):
     image_filename = db.Column(db.String(120), nullable=True)
     created = db.Column(db.DateTime, default=get_local_time)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)    
-
+    rating_sum = db.Column(db.Integer, default=0)
+    rating_count = db.Column(db.Integer, default=0)
     user = db.relationship('User', backref=db.backref('user_recipes', lazy=True))
+
+    @property
+    def average_rating(self):
+        if not self.rating_count or not self.rating_sum:
+            return None
+        return round(self.rating_sum / self.rating_count, 1)
+
 
 #Users have individual displays profiles tied to their account, which are optional
 class Profile(db.Model):

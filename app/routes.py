@@ -194,8 +194,26 @@ def logout():
     session.pop('visitor_email', None)
     return redirect(url_for('home'))
 
-if __name__ == '__main__':
-    with app.app_context():
-       db.create_all()
-    app.run(debug=True)
+@app.route('/recipe/<int:id>/rate', methods=['POST'])
+def rate_recipe(id):
+    recipe = Recipe.query.get_or_404(id)
+
+    # Defensive fix for None values
+    if recipe.rating_sum is None:
+        recipe.rating_sum = 0
+    if recipe.rating_count is None:
+        recipe.rating_count = 0
+
+    try:
+        rating = int(request.form['rating'])
+        if rating < 1 or rating > 5:
+            flash('Invalid rating. Please select between 1 and 5.', 'danger')
+        else:
+            recipe.rating_sum += rating
+            recipe.rating_count += 1
+            db.session.commit()
+            flash('Thank you for rating!', 'success')
+    except (ValueError, KeyError):
+        flash('Invalid rating submission.', 'danger')
+    return redirect(url_for('recipe_details', id=recipe.id))
 
