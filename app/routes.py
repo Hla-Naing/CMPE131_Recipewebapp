@@ -1,4 +1,5 @@
 
+# Import required modules for routing, forms, database, file handling, etc.
 import os
 import random
 from flask import Flask, render_template, redirect, url_for, flash, session, request
@@ -10,12 +11,14 @@ from . import app, db, login_manager
 from .models import User, Recipe, Profile
 from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm
 
+# Helper function to save and resize uploaded images
 def save_resized_image(image_file, filename, size=(300, 300)):
     filepath = os.path.join(app.root_path, 'static/uploads', filename)
     img = Image.open(image_file)
     img.thumbnail(size)  
     img.save(filepath)
 
+# Helper function to generate a shuffled list of placeholder colors
 def get_placeholder_colors(count):
     colors = [
         "#FF6B6B", "#6BCB77", "#4D96FF", "#FFC75F",
@@ -25,19 +28,23 @@ def get_placeholder_colors(count):
     random.shuffle(colors)
     return colors[:count]
 
+# Callback to load a user by ID (used by Flask-Login)
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Injects current_user into all templates
 @app.context_processor
 def inject_user():
     return dict(current_user=current_user)
 
+# Home page route that displays all recipes (for general viewing)
 @app.route('/', methods=['GET','POST'])
 def home():
     recipes = Recipe.query.order_by(Recipe.title.asc()).all()
     return render_template('home.html', recipes=recipes)
 
+# Visitor-facing recipe browsing with optional search
 @app.route('/visitor_recipes')
 def visitor_recipes():
     search_query = request.args.get('q', '')
@@ -52,6 +59,7 @@ def visitor_recipes():
         recipes = Recipe.query.all()
     return render_template('visitor_recipes.html', recipes=recipes)
 
+# Login page and logic
 @app.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
@@ -64,6 +72,7 @@ def login():
             flash('Login Unsuccessful. Please check email and password.', 'danger')
     return render_template('login.html', form=form)
 
+# Registration page and logic
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -75,6 +84,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
+# Authenticated user's personal recipe dashboard
 @app.route('/recipes')
 @login_required
 def recipes():
@@ -83,6 +93,7 @@ def recipes():
     placeholder_colors = get_placeholder_colors(missing_images_count)
     return render_template('recipes.html', recipes=recipes, name=current_user.username, placeholder_colors=placeholder_colors)
 
+# Page for creating a new recipe
 @app.route('/make_recipe', methods=['GET', 'POST'])
 @login_required
 def make_recipe():
@@ -110,11 +121,13 @@ def make_recipe():
 
     return render_template('new_recipe.html', form=form)
 
+# Display a single recipe's detail page
 @app.route('/recipe/<int:id>')
 def recipe_details(id):
     recipe = Recipe.query.get_or_404(id)
     return render_template('recipe_details.html', recipe=recipe)
 
+# Edit an existing recipe (only allowed by the owner)
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_recipe(id):
@@ -151,6 +164,7 @@ def edit_recipe(id):
 
     return render_template('edit_recipe.html', form=form, recipe=recipe)
 
+# Delete a recipe (only allowed by the owner)
 @app.route('/delete_recipe/<int:id>', methods=['POST'])
 @login_required
 def delete_recipe(id):
@@ -162,6 +176,7 @@ def delete_recipe(id):
     flash('Recipe deleted successfully.', 'success')
     return redirect(url_for('recipes'))
 
+# View another user's public recipes
 @app.route('/user/<int:user_id>/recipes')
 @login_required
 def user_recipes(user_id):
@@ -169,6 +184,7 @@ def user_recipes(user_id):
     recipes = Recipe.query.filter_by(user_id=user.id).order_by(Recipe.title.asc()).all()
     return render_template('user_recipes.html', user=user, recipes=recipes)
 
+# View current user's profile
 @app.route('/profile', methods=['POST'])
 @login_required
 def view_profile():
@@ -176,6 +192,7 @@ def view_profile():
     recipes = Recipe.query.filter_by(user_id=current_user.id).all()
     return render_template('profile.html',profile=profile,recipes=recipes)
 
+# Edit current user's profile
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -188,12 +205,14 @@ def edit_profile():
         flash("Profile updated.")
     return render_template('edit_profile.html',form=form)
 
+# Logout the current user and clear session
 @app.route('/logout')
 def logout():
     logout_user()
     session.pop('visitor_email', None)
     return redirect(url_for('home'))
 
+# Handle recipe rating submissions
 @app.route('/recipe/<int:id>/rate', methods=['POST'])
 def rate_recipe(id):
     recipe = Recipe.query.get_or_404(id)
