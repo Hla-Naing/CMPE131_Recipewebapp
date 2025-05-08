@@ -1,66 +1,80 @@
 
 {% extends "base.html" %}
 {%block title %}{{ recipe.title }}{% endblock %}
+
 {% block content %}
-    <h1>{{ recipe.title }}</h1>
+<!-- Display the recipe title -->
+<h1>{{ recipe.title }}</h1>
 
-    {% if recipe.image_filename %}
-        <img src="{{ url_for('static', filename='uploads/' + recipe.image_filename) }}" alt="{{ recipe.title }}" style="width: 100%; max-width: 600px; height: auto; margin-top: 16px; border-radius: 8px;">
-    {% endif %}
+<!-- Show recipe image if it exists -->
+{% if recipe.image_filename %}
+    <img src="{{ url_for('static', filename='uploads/' + recipe.image_filename) }}" 
+         alt="{{ recipe.title }}" 
+         style="width: 100%; max-width: 600px; height: auto; margin-top: 16px; border-radius: 8px;">
+{% endif %}
 
-    <p><strong>Description:</strong> {{ recipe.description }}</p>
-    
-    {% if recipe.ingredients %}
+<!-- Recipe description -->
+<p><strong>Description:</strong> {{ recipe.description }}</p>
+
+<!-- Ingredients section (if any), shown as a list -->    
+{% if recipe.ingredients %}
     <p><strong>Ingredients:</strong></p>
     <ul>
         {% for ingredient in recipe.ingredients.split('\n') %}
             <li>{{ ingredient }}</li>
         {% endfor %}
     </ul>
-    {% endif %}
+{% endif %}
 
-    {% if recipe.instructions %}
+<!-- Instructions section (if any), shown as an ordered list -->
+{% if recipe.instructions %}
     <p><strong>Instructions:</strong></p>
     <ol>
         {% for instruction in recipe.instructions.split('\n') %}
             <li>{{ instruction }}</li>
         {% endfor %}
     </ol>
+{% endif %}
+
+<!-- Show creation date formatted for readability -->
+<p><strong>Created on:</strong> {{ recipe.created.strftime('%B %d, %Y at %I:%M %p') }}</p>
+
+<!-- Show Edit and Delete options if the current user is the recipe's author -->
+{% if current_user.is_authenticated and current_user.id == recipe.user_id %}
+    <div style="margin-top: 20px;">
+        <!-- Delete recipe form (POST) -->
+        <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+
+        <!-- Link to edit the recipe -->
+        <a href="{{ url_for('edit_recipe', id=recipe.id) }}">
+            <button style="margin-left: 10px;">Edit</button>
+        </a>
+    </div>
+{% endif %}
+
+<!-- Display average rating if available -->
+<p><strong>Average Rating:</strong>
+    {% if recipe.average_rating %}
+        {{ recipe.average_rating }} / 5 ({{ recipe.rating_count }} ratings)
+    {% else %}
+        Not rated yet
     {% endif %}
+</p>
 
-    <p><strong>Created on:</strong> {{ recipe.created.strftime('%B %d, %Y at %I:%M %p') }}</p>
-
-    {% if current_user.is_authenticated and current_user.id == recipe.user_id %}
-        <div style="margin-top: 20px;">
-            <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
-
-            <a href="{{ url_for('edit_recipe', id=recipe.id) }}">
-                <button style="margin-left: 10px;">Edit</button>
-            </a>
-        </div>
-    {% endif %}
-
-
-    <p><strong>Average Rating:</strong>
-        {% if recipe.average_rating %}
-            {{ recipe.average_rating }} / 5 ({{ recipe.rating_count }} ratings)
-        {% else %}
-            Not rated yet
-        {% endif %}
-    </p>
-    <form action="{{ url_for('rate_recipe', id=recipe.id) }}" method="POST">
-        <label for="rating">Rate this recipe:</label>
-        <select name="rating" id="rating">
-            <option value="1">1 ★</option>
-            <option value="2">2 ★</option>
-            <option value="3">3 ★</option>
-            <option value="4">4 ★</option>
-            <option value="5">5 ★</option>
-        </select>
-        <button type="submit">Submit Rating</button>
-    </form>
+<!-- Rating submission form -->
+<form action="{{ url_for('rate_recipe', id=recipe.id) }}" method="POST">
+    <label for="rating">Rate this recipe:</label>
+    <select name="rating" id="rating">
+        <option value="1">1 ★</option>
+        <option value="2">2 ★</option>
+        <option value="3">3 ★</option>
+        <option value="4">4 ★</option>
+        <option value="5">5 ★</option>
+    </select>
+    <button type="submit">Submit Rating</button>
+</form>
     
-    {% endblock %}
+{% endblock %}
 

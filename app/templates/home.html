@@ -3,8 +3,10 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<!-- Main heading for the homepage -->
 <h1>Welcome to the Recipe App!</h1>
 
+<!-- Internal CSS for recipe grid layout and card styling -->
 <style>
 
     .recipe-grid {
@@ -56,16 +58,20 @@
     }
 </style>
 
+<!-- Define a list of fallback background colors for recipes without images -->
 {% set colors = ['#FF6B6B', '#6BCB77', '#4D96FF', '#FFC75F', '#F9F871', '#A393EB', '#FF9671', '#00C9A7', '#D65DB1', '#845EC2'] %}
 
+<!-- Grid display of all recipes -->
 <div class="recipe-grid">
     {% for recipe in recipes %}
         {% set has_image = recipe.image_filename is not none %}
         {% set color = colors[recipe.id % colors|length] %}
-            
+        
+        <!-- Each recipe is a clickable card linking to the details page -->    
         <a href="{{ url_for('recipe_details', id=recipe.id) }}"
             class="recipe-card {% if has_image %}has-image{% endif %}">
 
+            <!-- Card image or color box -->
             <div class="recipe-card-box"
                 style="background-color: {% if not has_image %}{{ color }}{% else %}transparent{% endif %};">
                 {% if has_image %}
@@ -73,6 +79,8 @@
                         alt="{{ recipe.title }}">
                 {% endif %}
             </div>
+
+            <!-- Recipe title displayed under the card -->
             <div class="recipe-title">{{ recipe.title }}</div>
         </a>
     {% endfor %}

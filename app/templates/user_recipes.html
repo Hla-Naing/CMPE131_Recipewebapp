@@ -1,19 +1,26 @@
 
 {% extends "base.html" %}
 {% block title %}{{ user.username }}'s Recipes{% endblock %}
+
 {% block content %}
+<!-- Page heading showing which user's recipes are being viewed -->
 <h1>{{ user.username }}'s Recipes</h1>
 
+<!-- Check if the user has any recipes to display -->
 {% if recipes %}
     <ul>
     {% for recipe in recipes %}
+        <!-- List each recipe with a link to its detail page -->
         <li>
             <a href="{{ url_for('recipe_details', id=recipe.id) }}">{{ recipe.title }}</a>
         </li>
     {% endfor %}
     </ul>
 {% else %}
+    <!-- Message if the user hasn't created any recipes yet -->
     <p>This user has not created any recipes yet.</p>
 {% endif %}
 {% endblock %}
+
+
 

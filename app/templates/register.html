@@ -1,10 +1,16 @@
 
 {% extends "base.html" %}
 {% block title %}Register{% endblock %}
+
 {% block content %}
+<!-- Page heading -->
 <h2>Register</h2>
+
+<!-- Registration form using Flask-WTF form object -->
 <form method="POST">
-    {{ form.hidden_tag() }}
+    {{ form.hidden_tag() }}  <!-- CSRF protection and hidden fields -->
+
+    <!-- Username input and validation errors -->
     <p>
        {{ form.username.label }}<br>
        {{ form.username(size=32) }}
@@ -13,6 +19,7 @@
        {% endfor %}
     </p>
 
+    <!-- Email input and validation errors -->
     <p>
        {{ form.email.label }}<br>
        {{ form.email(size=32) }}
@@ -21,6 +28,7 @@
        {% endfor %}
     </p>
 
+    <!-- Password input and validation errors -->
     <p>
        {{ form.password.label }}<br>
        {{ form.password(size=32) }}
@@ -29,6 +37,7 @@
        {% endfor %}
     </p>
 
+    <!-- Confirm password input and validation errors -->
     <p>
        {{ form.confirm_password.label }}<br>
        {{ form.confirm_password(size=32) }}
@@ -37,7 +46,9 @@
        {% endfor %}
     </p>
 
+    <!-- Submit button -->
     <p>{{ form.submit() }}</p>
 </form>
 {% endblock %}
+
 

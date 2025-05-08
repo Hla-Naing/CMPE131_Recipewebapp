@@ -4,51 +4,63 @@
 
 {% block content %}
 
-    <h1>Create A New Recipe</h1>
+<!-- Page heading -->
+<h1>Create A New Recipe</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+<!-- Recipe creation form: includes title, description, ingredients, instructions, and optional image -->
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}  <!-- CSRF token and hidden fields -->
 
-        <p>
-            {{ form.title.label }}<br>
-            {{ form.title(size=32) }}
-        </p>
+    <!-- Recipe title input -->
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(size=32) }}
+    </p>
 
-        <p>
-            {{ form.description.label }}<br>
-            {{ form.description(cols=40, rows=4) }}
-        </p>
+    <!-- Recipe description input -->
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(cols=40, rows=4) }}
+    </p>
 
-        <p>
-            {{ form.ingredients.label }}<br>
-            {{ form.ingredients(cols=40, rows=4) }}
-        </p>
+    <!-- Ingredients input -->
+    <p>
+        {{ form.ingredients.label }}<br>
+        {{ form.ingredients(cols=40, rows=4) }}
+    </p>
 
-        <p>
-            {{ form.instructions.label }}<br>
-            {{ form.instructions(cols=40, row=4) }}
-        </p>
+    <!-- Instructions input -->
+    <p>
+        {{ form.instructions.label }}<br>
+        {{ form.instructions(cols=40, row=4) }}
+    </p>
 
-        <p>
-            {{ form.image.label }}<br>
-            {{ form.image() }}
-        </p>
+    <!-- Image upload input -->
+    <p>
+        {{ form.image.label }}<br>
+        {{ form.image() }}
+    </p>
 
-        <p>
+    <!-- Image preview placeholder -->
+    <p>
         <img id="image-preview" src="#" alt="Image Preview"
-             style="display: none; width: 200px; height: auto; border-radius: 6px; margin-top: 10px;">
-        </p>
+            style="display: none; width: 200px; height: auto; border-radius: 6px; margin-top: 10px;">
+    </p>
 
-        <p>{{ form.submit() }}</p>
-    </form>
+    <!-- Submit button -->
+    <p>{{ form.submit() }}</p>
+</form>
 
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('recipes') }}">Back to Recipes</a></li>
-            <li><a href="{{ url_for('logout') }}">Press Here for Logout</a></li>
-        </ul>
-    </nav>
-    <script>
+<!-- Navigation options for returning or logging out -->
+<nav>
+    <ul>
+        <li><a href="{{ url_for('recipes') }}">Back to Recipes</a></li>
+        <li><a href="{{ url_for('logout') }}">Press Here for Logout</a></li>
+    </ul>
+</nav>
+
+<!-- JavaScript to show live preview of uploaded image -->
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         const imageInput = document.querySelector('input[type="file"]');
         const preview = document.getElementById('image-preview');
@@ -67,6 +79,7 @@
             });
         }
     });
-    </script>
+</script>
+
 {% endblock %}
 
