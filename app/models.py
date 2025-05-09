@@ -16,7 +16,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)  # Username
     email = db.Column(db.String(120), unique=True, nullable=False)  # Email address
     password = db.Column(db.String(60), nullable=False)  # Hashed password
-    recipes = db.relationship('Recipe', backref='author', lazy=True)  # Relationship to recipes
+    recipes = db.relationship('Recipe', backref='author', lazy=True)  # Relationship to recipes (one-to-many)
+    profile = db.relationship('Profile', backref='author', lazy=True, uselist=False)  # Relationship to profile (one-to-many)
 
 # Helper function to return current time in a specific timezone
 def get_local_time():
@@ -45,7 +46,7 @@ class Recipe(db.Model):
         return round(self.rating_sum / self.rating_count, 1)
 
 
-#Users have individual displays profiles tied to their account, which are optional
+#Users have individual display profiles tied to their account (one-to-one relationship), which are optional
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)

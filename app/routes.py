@@ -59,7 +59,7 @@ def visitor_recipes():
         recipes = Recipe.query.all()
     return render_template('visitor_recipes.html', recipes=recipes)
 
-# Login page and logic
+# Login page and logic, checks for existing user info
 @app.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
@@ -196,7 +196,7 @@ def view_profile():
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    #update database for display info on profile
+    # Update database for display info on profile
     form = ProfileForm()
     if form.validate_on_submit():
         profile = Profile(id=form.id.data, username=form.username.data, bio=form.bio.data, user_id=current_user.id)

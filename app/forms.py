@@ -62,6 +62,5 @@ class VisitorEmailForm(FlaskForm):
 # Form for users to update their profile information
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=32)])
-    bio = StringField('User Bio')
+    bio = TextAreaField('User Bio')
     submit = SubmitField('Update Profile')
-                                           
