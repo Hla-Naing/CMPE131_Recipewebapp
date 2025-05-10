@@ -10,9 +10,11 @@ Open the main CMPE131_Recipewebapp directory, create the environment with "pytho
 Then, use “pip3 install library” for each (also found in the "requirements.txt" file):
 - Flask (managing the package)
 - Flask-SQLAlchemy (managing user, recipe, and profile databases) 
-- Flask-WTF (managing login and submission forms)
+- Flask-WTF (managing submission forms)
+- Flask-Login
+- Flask-Migrate
 - Pytz (retrieval of local time)
-- Pillow (management of uploaded images).
+- Pillow (management of uploaded images)
 
 Viewers must enter their email to see the list of recipes on the home page, but for further interaction with individual recipes, need to register an account through the ‘/register’ page.
 Once a user ID is saved in our database, they can log in (‘/login’) to grant access to posting recipes (‘/make_recipe’), viewing individual recipes of others (‘/recipe/<int:id>’), and commenting on/rating/saving them.
