@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<h1>About This Recipe App</h1>
+
+<section>
+    <h2>Our Mission</h2>
+    <p>
+        This web app is designed with care to help users explore, create, and share food recipes safely and ethically.
+        From protecting personal information with encrypted logins to form validation and secure data handling,
+        we’re committed to doing things the right way.
+    </p>
+</section>
+
+<section>
+    <h2>Ethical Considerations</h2>
+    <p>
+        We aim to ensure that all users have equal access, whether they’re using a screen reader or browsing from a mobile device.
+        We avoid unsupported health claims and rely on trusted sources if nutrition facts are presented.
+        Our platform could one day promote local ingredients and seasonal produce, which not only supports small farms
+        but also benefits the environment.
+    </p>
+</section>
+
+<section>
+    <h2>Engineering Philosophy</h2>
+    <p>
+        We treat this app as a foundation for future work — clarity, transparency, and accountability are key.
+        All code is clearly documented, and we follow best practices to make the app safe and extensible.
+        Our goal is to create solutions that are not just effective, but also sustainable, inclusive, and ethical.
+    </p>
+</section>
+
+<p><a href="{{ url_for('home') }}">← Back to Home</a></p>
+{% endblock %}
+

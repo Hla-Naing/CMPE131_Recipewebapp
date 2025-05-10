@@ -236,3 +236,9 @@ def rate_recipe(id):
         flash('Invalid rating submission.', 'danger')
     return redirect(url_for('recipe_details', id=recipe.id))
 
+#  About Us route 
+@app.route('/about')
+def about_us():
+    return render_template('about_us.html')
+
+
