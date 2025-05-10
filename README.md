@@ -5,7 +5,9 @@
 - Kris (@krisros1)
 
 **Welcome to our recipe sharing app!** This program allows logged in users to view and submit recipes. 
-To run this app, the following libraries must be installed under a virtual environment and using “pip3 install library”:
+To run this app, the following libraries must be installed under a virtual environment.
+Open the main CMPE131_Recipewebapp directory, create the environment with "python3 -m venv venv", and activate it with "source venv/bin/activate".
+Then, use “pip3 install library” for each (also found in the "requirements.txt" file):
 - Flask (managing the package)
 - Flask-SQLAlchemy (managing user, recipe, and profile databases) 
 - Flask-WTF (managing login and submission forms)
@@ -17,6 +19,7 @@ Once a user ID is saved in our database, they can log in (‘/login’) to grant
 Each user can edit their own recipes (‘/edit_recipe/<int:id>’) and specific user profile displaying a biography (‘/profile’), or change their registration data behind the scenes (to be added).
 When finished, the user can then end their session by going to ‘/logout’. 
 
+Other files contained in this package include "requirements.md" (listing the functional requirements each team member contributes to) and "meetings.md" (listing some team meetings and progress).
 
 **Ethical Considerations (1):**
 When building this food recipe web app, I have to think about doing things the right way. 
