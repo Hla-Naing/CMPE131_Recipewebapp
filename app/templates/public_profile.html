@@ -18,6 +18,18 @@
     <p>This user has not added a profile description yet.</p>
 {% endif %}
 
+<h2>My Recipes</h2>
+
+{% if recipes %}
+    <ul>
+        {% for recipe in recipes %}
+            <li><a href="{{ url_for('recipe_details', id=recipe.id) }}">{{ recipe.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>This user hasn't created any recipes yet.</p>
+{% endif %}
+
 <!-- Optional link back -->
 <p><a href="{{ url_for('home') }}">← Back to Home</a></p>
 {% endblock %}

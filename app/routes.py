@@ -181,7 +181,8 @@ def delete_recipe(id):
 def public_profile(user_id):
     user = User.query.get_or_404(user_id)
     profile = Profile.query.filter_by(user_id=user.id).first()
-    return render_template('public_profile.html', user=user, profile=profile)
+    recipes = Recipe.query.filter_by(user_id=user.id).all()
+    return render_template('public_profile.html', user=user, profile=profile, recipes=recipes)
 
 # View another user's public recipes
 @app.route('/user/<int:user_id>/recipes')
@@ -196,8 +197,7 @@ def user_recipes(user_id):
 @login_required
 def view_profile():
     profile = Profile.query.filter_by(user_id=current_user.id).first()
-    recipes = Recipe.query.filter_by(user_id=current_user.id).all()
-    return render_template('profile.html', profile=profile, recipes=recipes)       
+    return render_template('profile.html', profile=profile)       
 
 # Edit current user's profile
 @app.route('/edit_profile', methods=['GET', 'POST'])

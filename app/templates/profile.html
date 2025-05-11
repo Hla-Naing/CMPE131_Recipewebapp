@@ -9,7 +9,7 @@
     <tr><th>Username:</th><td>{{ current_user.username }}</td></tr>
     <tr><th>Email:</th><td>{{ current_user.email }}</td></tr>
     <tr><th>Password:</th><td>*****</td></tr>
-    <tr><th>Bio:</th><td>{{ profile.bio if profile else 'No bio added.' }}</td></tr>  <!-- ✅ Bio display -->
+    <tr><th>Bio:</th><td>{{ profile.bio if profile else 'No bio added.' }}</td></tr>  <!-- Bio display -->
 </table>
 
 <!-- Edit Profile Button -->
@@ -18,18 +18,6 @@
         <button>Edit Profile</button>
     </a>
 </p>
-
-<h2>My Recipes</h2>
-
-{% if recipes %}
-    <ul>
-        {% for recipe in recipes %}
-        <li><a href="{{ url_for('recipe_details', id=recipe.id) }}">{{ recipe.title }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>You haven't created any recipes yet.</p>
-{% endif %}
 
 <nav>
     <ul>
