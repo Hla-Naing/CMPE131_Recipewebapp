@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Article layout for displaying recipe details -->
+<article class="recipe-detail">
+
+    <!-- Recipe title -->
+    <h1>{{ recipe.title }}</h1>
+
+    <!-- Metadata: author name -->
+    <p class="meta">
+      by {{ recipe.author.username }}
+    </p>
+
+    <!-- Recipe description section -->
+    <section class="description">
+      <p>{{ recipe.description }}</p>
+    </section>
+
+    <!-- Navigation link to return to the list of visitor recipes -->
+    <p><a href="{{ url_for('visitor_recipes') }}">← Back to all recipes</a></p>
+
+</article>
+{% endblock %}
+
+

@@ -1,0 +1,85 @@
+
+{% extends "base.html" %}
+{% block title %}New Recipe{% endblock %}
+
+{% block content %}
+
+<!-- Page heading -->
+<h1>Create A New Recipe</h1>
+
+<!-- Recipe creation form: includes title, description, ingredients, instructions, and optional image -->
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}  <!-- CSRF token and hidden fields -->
+
+    <!-- Recipe title input -->
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(size=32) }}
+    </p>
+
+    <!-- Recipe description input -->
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(cols=40, rows=4) }}
+    </p>
+
+    <!-- Ingredients input -->
+    <p>
+        {{ form.ingredients.label }}<br>
+        {{ form.ingredients(cols=40, rows=4) }}
+    </p>
+
+    <!-- Instructions input -->
+    <p>
+        {{ form.instructions.label }}<br>
+        {{ form.instructions(cols=40, row=4) }}
+    </p>
+
+    <!-- Image upload input -->
+    <p>
+        {{ form.image.label }}<br>
+        {{ form.image() }}
+    </p>
+
+    <!-- Image preview placeholder -->
+    <p>
+        <img id="image-preview" src="#" alt="Image Preview"
+            style="display: none; width: 200px; height: auto; border-radius: 6px; margin-top: 10px;">
+    </p>
+
+    <!-- Submit button -->
+    <p>{{ form.submit() }}</p>
+</form>
+
+<!-- Navigation options for returning or logging out -->
+<nav>
+    <ul>
+        <li><a href="{{ url_for('recipes') }}">Back to Recipes</a></li>
+        <li><a href="{{ url_for('logout') }}">Press Here for Logout</a></li>
+    </ul>
+</nav>
+
+<!-- JavaScript to show live preview of uploaded image -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageInput = document.querySelector('input[type="file"]');
+        const preview = document.getElementById('image-preview');
+
+        if (imageInput && preview) {
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}
+

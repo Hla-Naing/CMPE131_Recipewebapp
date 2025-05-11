@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<!-- Page heading -->
+<h2>Login</h2>
+
+<!-- Login form: uses Flask-WTF form object -->
+<form method="POST">
+    {{ form.hidden_tag() }}  <!-- CSRF protection and hidden fields -->
+
+    <!-- Email input field -->
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=32) }}
+    </p>
+    
+    <!-- Password input field -->
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=32) }}
+    </p>
+
+    <!-- Submit button -->
+    <p>{{ form.submit() }}</p>
+</form>
+
+
+<!-- Registration link for users without an account -->
+<p>
+    Don't have an account?
+    <a href="{{ url_for('register') }}">Register here</a>.
+</p>
+{% endblock %}
+
+

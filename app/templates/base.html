@@ -3,9 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Page title can be overridden in child templates -->
     <title>{% block title %}Recipe App{% endblock %}</title>
+
     <style>
-        /* Top navbar with logo, search bar, login */
+        /* Top navbar styles: logo, search bar, login/logout link */
         .top-navbar {
             display: flex;
             align-items: center;
@@ -33,7 +35,7 @@
             color: #333;
         }
 
-        /* Bottom nav menu */
+        /* Bottom navigation bar styles: page links */
         .bottom-navbar {
             background-color: #e0e0e0;
             padding: 8px 20px;
@@ -47,11 +49,21 @@
         .bottom-navbar a:hover {
             color: #000;
         }
+
+        /* Footer placeholder styling */
+        footer {
+            margin-top: 60px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f1f1f1;
+            color: #777;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Top navbar: logo + search + login -->
+    <!-- Top navbar: includes logo, search form, and login/logout link -->
     <div class="top-navbar">
         <div class="logo">
             <a href="{{ url_for('home') }}">
@@ -59,21 +71,24 @@
             </a>
         </div>
         <div class="search-bar">
+            <!-- Search form for visitors to look up recipes -->
             <form action="{{ url_for('visitor_recipes') }}" method="get">
                 <input type="text" name="q" placeholder="Search recipes...">
             </form>
         </div>
         <div class="login-link">
+            <!-- Conditional links based on user or visitor session -->
             {% if current_user.is_authenticated %}
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% elif session.get('visitor_email') %}
                 <a href="{{ url_for('logout') }}">Exit Visitor Mode</a>
             {% else %}
                 <a href="{{ url_for('login') }}">Login</a>
-            {% endif %}        </div>
+            {% endif %}
+        </div>
     </div>
 
-    <!-- Bottom navbar: regular nav links -->
+    <!-- Bottom navbar: navigation menu changes based on user state -->
     <div class="bottom-navbar">
     <a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}class="active"{% endif %}>Home</a>
 
@@ -90,6 +105,7 @@
     {% endif %}
     </div>
 
+    <!-- Flash message display section -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -98,7 +114,14 @@
       {% endif %}
     {% endwith %}
 
+    <!-- Placeholder for content to be filled in by child templates -->
     {% block content %}{% endblock %}
+
+    <!-- Footer placeholder -->
+    <footer>
+    <a href="{{ url_for('about_us') }}">About Us</a>
+</footer>
 
 </body>
 </html>
+

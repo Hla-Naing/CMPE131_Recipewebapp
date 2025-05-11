@@ -1,0 +1,84 @@
+
+{% extends "base.html" %}
+{% block title %}Edit Recipe{% endblock %}
+
+{% block content %}
+<!-- Page heading -->
+<h2>Edit Recipe</h2>
+
+<!-- Recipe edit form: allows editing of title, description, ingredients, instructions, and image -->
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}  <!-- CSRF protection and hidden form fields -->
+
+    <!-- Title input -->
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(size=50) }}
+    </p>
+    
+    <!-- Description input -->
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(rows=3, cols=50) }}
+    </p>
+
+    <!-- Ingredients input -->
+    <p>
+        {{ form.ingredients.label }}<br>
+        {{ form.ingredients(rows=5, cols=50) }}
+    </p>
+    
+    <!-- Instructions input -->
+    <p>
+        {{ form.instructions.label }}<br>
+        {{ form.instructions(rows=8, cols=50) }}
+    </p>
+    
+    <!-- Display current recipe image if it exists -->
+    <p><strong>Current Image:</strong></p>
+    {% if recipe.image_filename %}
+        <img id="current-image"
+            src="{{ url_for('static', filename='uploads/' + recipe.image_filename) }}"
+            alt="Current Recipe Image"
+            style="width: 200px; height: auto; border-radius: 6px; margin-bottom: 10px;">
+    {% endif %}
+
+    <!-- Placeholder for live preview of new image upload -->
+    <img id="image-preview" src="#" alt="New image preview" style="display: none; width: 200px; height: auto; border-radius: 6px; margin-bottom: 10px;">
+
+    <!-- Image file upload field -->
+    <p>
+        {{ form.image.label }}<br>
+        {{ form.image() }}
+    </p>
+
+    <!-- Submit button -->
+    <p>{{ form.submit() }}</p>
+</form>
+  
+<!-- JavaScript to preview new image and hide the current one if a new image is selected -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageInput = document.querySelector('input[type="file"]');
+        const preview = document.getElementById('image-preview');
+        const current = document.getElementById('current-image');
+
+        if (imageInput && preview){        
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                        if (current) current.style.display = "none";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}
+
