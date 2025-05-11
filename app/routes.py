@@ -176,6 +176,13 @@ def delete_recipe(id):
     flash('Recipe deleted successfully.', 'success')
     return redirect(url_for('recipes'))
 
+# User Profile & Public Routes
+@app.route('/profile/<int:user_id>')
+def public_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    profile = Profile.query.filter_by(user_id=user.id).first()
+    return render_template('public_profile.html', user=user, profile=profile)
+
 # View another user's public recipes
 @app.route('/user/<int:user_id>/recipes')
 @login_required

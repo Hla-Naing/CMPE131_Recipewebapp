@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<h1>{{ user.username }}'s Profile</h1>
+
+{% if profile and profile.bio %}
+    <p>{{ profile.bio }}</p>
+{% else %}
+    <p>This user has not added a profile description yet.</p>
+{% endif %}
+
+{% if profile and profile.image_filename %}
+    <img src="{{ url_for('static', filename='uploads/' + profile.image_filename) }}"
+         alt="User Image" style="width: 200px; border-radius: 10px;">
+{% endif %}
+
+<p><a href="{{ url_for('home') }}">← Back to Home</a></p>
+{% endblock %}
+
