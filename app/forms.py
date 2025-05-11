@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 
 # Import the User model for validation checks
 from .models import User
@@ -62,7 +62,9 @@ class VisitorEmailForm(FlaskForm):
 # Form for users to update their profile information
 class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=32)])
-    bio = TextAreaField('User Bio')
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('New Password', validators=[Optional(), password_requirements])
+    bio = StringField('User Bio')
     submit = SubmitField('Update Profile')
 
 
