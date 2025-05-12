@@ -176,6 +176,14 @@ def delete_recipe(id):
     flash('Recipe deleted successfully.', 'success')
     return redirect(url_for('recipes'))
 
+# User Profile & Public Routes
+@app.route('/profile/<int:user_id>')
+def public_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    profile = Profile.query.filter_by(user_id=user.id).first()
+    recipes = Recipe.query.filter_by(user_id=user.id).all()
+    return render_template('public_profile.html', user=user, profile=profile, recipes=recipes)
+
 # View another user's public recipes
 @app.route('/user/<int:user_id>/recipes')
 @login_required
@@ -185,25 +193,36 @@ def user_recipes(user_id):
     return render_template('user_recipes.html', user=user, recipes=recipes)
 
 # View current user's profile
-@app.route('/profile', methods=['POST'])
+@app.route('/profile')
 @login_required
 def view_profile():
-    profile = Profile.query.filter_by(user_id=current_user.id).all()
-    recipes = Recipe.query.filter_by(user_id=current_user.id).all()
-    return render_template('profile.html',profile=profile,recipes=recipes)
+    profile = Profile.query.filter_by(user_id=current_user.id).first()
+    return render_template('profile.html', profile=profile)       
 
 # Edit current user's profile
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    # Update database for display info on profile
-    form = ProfileForm()
+    profile = Profile.query.filter_by(user_id=current_user.id).first()
+
+    # Create profile record if it doesn't exist yet
+    if not profile:
+        profile = Profile(username=current_user.username, user_id=current_user.id)
+        db.session.add(profile)
+
+    form = ProfileForm(obj=profile)
+
     if form.validate_on_submit():
-        profile = Profile(id=form.id.data, username=form.username.data, bio=form.bio.data, user_id=current_user.id)
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        if form.password.data:
+            current_user.password = form.password.data  # You should hash this in production
         profile.bio = form.bio.data
         db.session.commit()
-        flash("Profile updated.")
-    return render_template('edit_profile.html',form=form)
+        flash("Profile updated successfully.")
+        return redirect(url_for('view_profile'))
+
+    return render_template('edit_profile.html', form=form, profile=profile)
 
 # Logout the current user and clear session
 @app.route('/logout')

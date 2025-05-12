@@ -1,3 +1,4 @@
+
 """Add rating fields to recipe
 
 Revision ID: c1f6ba11076e
@@ -32,3 +33,4 @@ def downgrade():
         batch_op.drop_column('rating_sum')
 
     # ### end Alembic commands ###
+

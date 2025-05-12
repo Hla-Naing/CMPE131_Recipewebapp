@@ -29,10 +29,21 @@
             font-size: 16px;
         }
         .top-navbar .login-link a {
-            margin-left: 20px;
-            text-decoration: none;
+            margin-left: 10px;
+            margin-right: 10px;
             font-weight: bold;
+            text-decoration: none;
             color: #333;
+            transition: color 0.2s ease;
+        }
+
+        .top-navbar .login-link a:hover {
+            color: #007BFF; /* Blue hover effect, adjust to your color palette */
+        }
+
+        .top-navbar .divider {
+            color: #aaa;
+            font-weight: normal;
         }
 
         /* Bottom navigation bar styles: page links */
@@ -59,6 +70,44 @@
             color: #777;
             font-style: italic;
         }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 140px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -77,14 +126,20 @@
             </form>
         </div>
         <div class="login-link">
-            <!-- Conditional links based on user or visitor session -->
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <div class="dropdown">
+                    <button class="dropdown-toggle">{{ current_user.username }} ▼</button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('public_profile', user_id=current_user.id) }}">Profile</a>
+                        <a href="{{ url_for('view_profile') }}">Settings</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </div>
             {% elif session.get('visitor_email') %}
                 <a href="{{ url_for('logout') }}">Exit Visitor Mode</a>
             {% else %}
                 <a href="{{ url_for('login') }}">Login</a>
-            {% endif %}        
+            {% endif %}
         </div>
     </div>
 

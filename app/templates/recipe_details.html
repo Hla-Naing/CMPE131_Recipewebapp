@@ -6,6 +6,19 @@
 <!-- Display the recipe title -->
 <h1>{{ recipe.title }}</h1>
 
+<div style="display: flex; align-items: center; gap: 10px; font-size: 0.9em; color: #666; margin-top: -8px; margin-bottom: 16px;">
+    {% set profile_img = recipe.user.profile.image_filename if recipe.user.profile and recipe.user.profile.image_filename else 'default_profile.png' %}
+
+    <img src="{{ url_for('static', filename='uploads/' + profile_img) }}"
+         alt="Profile image"
+         style="width: 32px; height: 32px; object-fit: cover; border-radius: 50%;">
+
+    <span>
+        By <a href="{{ url_for('public_profile', user_id=recipe.user.id) }}">{{ recipe.user.username }}</a>
+        &nbsp;|&nbsp; {{ recipe.created.strftime('%B %d, %Y at %I:%M %p') }}
+    </span>
+</div>
+
 <!-- Show recipe image if it exists -->
 {% if recipe.image_filename %}
     <img src="{{ url_for('static', filename='uploads/' + recipe.image_filename) }}" 
@@ -35,9 +48,6 @@
         {% endfor %}
     </ol>
 {% endif %}
-
-<!-- Show creation date formatted for readability -->
-<p><strong>Created on:</strong> {{ recipe.created.strftime('%B %d, %Y at %I:%M %p') }}</p>
 
 <!-- Show Edit and Delete options if the current user is the recipe's author -->
 {% if current_user.is_authenticated and current_user.id == recipe.user_id %}
@@ -77,4 +87,5 @@
 </form>
     
 {% endblock %}
+
 
