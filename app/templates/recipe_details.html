@@ -86,6 +86,29 @@
     <button type="submit">Submit Rating</button>
 </form>
     
+<!-- Comment submission form (logged in users only) -->
+{% if current_user.is_authenticated %}
+<form method="POST">
+	<p><strong>
+		Comment:</strong>
+	{{ form.comment }} 
+	{{ form.submit() }}
+	</p>
+{% endif %}
+
+<!-- List of existing comments --!>
+	<div class="comment-grid"
+	     style=
+	           "background-color":#DC6433
+		   "color":#FBDB92>
+    {% for comment in comments %}
+    <em>{{ comment.commenter }} | {{ comment.created }}</em><br>
+	{{ comment.comment_text }}
+
+    {% endfor %}
+        </div>
+
+
 {% endblock %}
 
 

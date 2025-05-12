@@ -37,6 +37,7 @@ class Recipe(db.Model):
     rating_sum = db.Column(db.Integer, default=0)
     rating_count = db.Column(db.Integer, default=0)
     user = db.relationship('User', backref=db.backref('user_recipes', lazy=True), overlaps="author,recipes")
+    comments = db.relationship('Comment', backref=db.backref('recipe', lazy=True)) #Relationship to comments (one-to-many)
 
     # Calculates and returns average rating, or None if no ratings
     @property
@@ -55,3 +56,10 @@ class Profile(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     
+#Comment model to create relationship between each recipe and their matching comments
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    commenter = db.Column(db.String(20), nullable=False)
+    comment_text = db.Column(db.Text, nullable=False)
+    created = db.Column(db.DateTime, default=get_local_time)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), nullable=False)

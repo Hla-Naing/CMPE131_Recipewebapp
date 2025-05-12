@@ -52,7 +52,7 @@ class RecipeForm(FlaskForm):
     instructions = TextAreaField('Instructions', validators=[DataRequired()])
     image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     remove_image = BooleanField('Remove current image') 
-    submit = SubmitField('Submit')
+    submit = SubmitField('Submit Recipe')
 
 # Form to collect visitor emails before allowing recipe viewing
 class VisitorEmailForm(FlaskForm):
@@ -68,5 +68,7 @@ class ProfileForm(FlaskForm):
     image = FileField('Upload New Profile Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Update Profile')
 
-
-
+# Form for logged in users to add comments to a recipe
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment Text',validators=[DataRequired(), Length(min=10)])
+    submit = SubmitField('Add Comment')
