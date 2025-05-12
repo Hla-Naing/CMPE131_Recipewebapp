@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)  # Username
     email = db.Column(db.String(120), unique=True, nullable=False)  # Email address
     password = db.Column(db.String(60), nullable=False)  # Hashed password
-    recipes = db.relationship('Recipe', backref='author', lazy=True)  # Relationship to recipes (one-to-many)
+    recipes = db.relationship('Recipe', backref='author', lazy=True, overlaps="user,user_recipes")
     profile = db.relationship('Profile', backref='user', uselist=False)  # Relationship to profile (one-to-one)
 
 # Helper function to return current time in a specific timezone
@@ -36,7 +36,7 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)    
     rating_sum = db.Column(db.Integer, default=0)
     rating_count = db.Column(db.Integer, default=0)
-    user = db.relationship('User', backref=db.backref('user_recipes', lazy=True))
+    user = db.relationship('User', backref=db.backref('user_recipes', lazy=True), overlaps="author,recipes")
 
     # Calculates and returns average rating, or None if no ratings
     @property
