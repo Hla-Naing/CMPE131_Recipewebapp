@@ -51,6 +51,7 @@ class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     bio = db.Column(db.Text, nullable=True)
+    image_filename = db.Column(db.String(120), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     

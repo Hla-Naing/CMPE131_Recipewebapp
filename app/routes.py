@@ -28,6 +28,17 @@ def get_placeholder_colors(count):
     random.shuffle(colors)
     return colors[:count]
 
+# Helper function to save and resize profile images
+def save_profile_image(image_file):
+    filename = secure_filename(image_file.filename)
+    filepath = os.path.join(app.root_path, 'static/uploads', filename)
+
+    img = Image.open(image_file)
+    img.thumbnail((300, 300))  # Resize
+    img.save(filepath)
+
+    return filename
+
 # Callback to load a user by ID (used by Flask-Login)
 @login_manager.user_loader
 def load_user(user_id):
@@ -216,8 +227,14 @@ def edit_profile():
         current_user.username = form.username.data
         current_user.email = form.email.data
         if form.password.data:
-            current_user.password = form.password.data  # You should hash this in production
+            current_user.password = form.password.data  
         profile.bio = form.bio.data
+
+        # Handle image upload
+        if form.image.data:
+            filename = save_profile_image(form.image.data)
+            profile.image_filename = filename
+
         db.session.commit()
         flash("Profile updated successfully.")
         return redirect(url_for('view_profile'))

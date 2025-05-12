@@ -5,7 +5,7 @@
 {% block content %}
 <h2>Edit Your Profile</h2>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
 
     <p>
@@ -27,6 +27,18 @@
         {{ form.bio.label }}<br>
         {{ form.bio(rows=4, cols=50) }}
     </p>
+
+    <p>
+        {{ form.image.label }}<br>
+        {{ form.image() }}
+    </p>
+
+    {% if profile and profile.image_filename %}
+        <p>Current image:</p>
+        <img src="{{ url_for('static', filename='uploads/' + profile.image_filename) }}"
+             alt="Profile Image"
+             style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;">
+    {% endif %}
 
     <p>{{ form.submit() }}</p>
 </form>

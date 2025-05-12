@@ -65,6 +65,8 @@ class ProfileForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('New Password', validators=[Optional(), password_requirements])
     bio = StringField('User Bio')
+    image = FileField('Upload New Profile Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Update Profile')
+
 
 

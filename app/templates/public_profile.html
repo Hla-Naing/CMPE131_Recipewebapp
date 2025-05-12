@@ -9,7 +9,7 @@
 {% set profile_img = profile.image_filename if profile and profile.image_filename else 'default_profile.png' %}
 <img src="{{ url_for('static', filename='uploads/' + profile_img) }}"
      alt="User profile image"
-     style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+     style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 12px;">
 
 <!-- Bio Section -->
 {% if profile and profile.bio %}
