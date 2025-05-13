@@ -170,13 +170,22 @@ def recipe_details(id):
     comments = Comment.query.filter_by(recipe_id=recipe.id).order_by(Comment.created.desc()).all()
 
     form = CommentForm()
-    
+
     if current_user.is_authenticated and form.validate_on_submit():
+        image_file=form.image.data
+        filename = None
+
+        if image_file:
+            filename = secure_filename(image_file.filename)
+            save_resized_image(image_file, filename, size=(150,150))
+
         new_comment = Comment(
             commenter=current_user.username,
             comment_text=form.comment.data,
+            image_filename=filename,
             recipe_id=recipe.id  # associate comment with this recipe
         )
+
         db.session.add(new_comment)
         db.session.commit()
         flash('Comment posted successfully!', 'success')

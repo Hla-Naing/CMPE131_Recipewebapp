@@ -87,6 +87,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     commenter = db.Column(db.String(20), nullable=False)
     comment_text = db.Column(db.Text, nullable=False)
+    image_filename = db.Column(db.String(120), nullable=True)
     created = db.Column(db.DateTime, default=get_local_time)
     recipe_id = db.Column(
         db.Integer,

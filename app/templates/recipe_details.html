@@ -110,13 +110,37 @@
     {{ form.hidden_tag() }}
     <p>
         {{ form.comment.label }}<br>
-        {{ form.comment(rows=3, cols=60) }}
+        {{ form.comment(rows=3, cols=60) }}<br>
+        {{ form.image.label }}<br>
+	{{ form.image() }}
     </p>
     <p>{{ form.submit() }}</p>
 </form>
 {% else %}
     <p><em>Log in to leave a comment.</em></p>
 {% endif %}
+
+<!-- JavaScript to show live preview of uploaded image -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageInput = document.querySelector('input[type="file"]');
+        const preview = document.getElementById('image-preview');
+
+        if (imageInput && preview) {
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
 
 <!-- Comment list -->
 <h3>Comments</h3>
@@ -136,6 +160,11 @@
                 <span style="font-style: italic; font-weight: normal; margin-left: 8px;">
                     {{ comment.created.strftime('%B %d, %Y %I:%M %p') }}
                 </span>
+		{% if comment.image_filename %}
+    		    <img src="{{ url_for('static', filename='uploads/' + comment.image_filename) }}"
+         	    alt="{{ recipe.title }}"
+         	    style="width: 100%; max-width: 150px; height: auto; margin-top: 16px; border-radius: 8px;">
+		{% endif %}
             </div>
             <p style="margin: 0;">{{ comment.comment_text }}</p>
         </div>

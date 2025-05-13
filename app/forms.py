@@ -85,4 +85,5 @@ class PasswordHintForm(FlaskForm):
 # Form for logged in users to add comments to a recipe
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment Text',validators=[DataRequired(), Length(min=10)])
+    image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Add Comment')
