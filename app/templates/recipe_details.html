@@ -93,10 +93,10 @@
         {% endfor %}
     </select>
     <button type="submit" style="
-        background-color: #FFA41C;
+        background-color: #4A8451;
         border: none;
         padding: 6px 12px;
-        color: white;
+        color: #FBDB92;
         font-weight: bold;
         border-radius: 4px;
         cursor: pointer;
@@ -147,7 +147,7 @@
 <!-- Saving favorites -->
     {% if current_user.is_authenticated %}
         <form method="POST" action="{% if recipe in current_user.favorites %}{{ url_for('unfavorite_recipe', recipe_id=recipe.id) }}{% else %}{{ url_for('favorite_recipe', recipe_id=recipe.id) }}{% endif %}">
-            <button type="submit" style="margin-top: 10px; background-color: #4D96FF; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+            <button type="submit" style="margin-top: 10px; background-color: #4A8451; color: #FBDB92; border: none; padding: 6px 12px; border-radius: 4px;">
                 {% if recipe in current_user.favorites %}
                     ★ Unfavorite
                 {% else %}
