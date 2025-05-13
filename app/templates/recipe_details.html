@@ -1,35 +1,33 @@
-
 {% extends "base.html" %}
-{%block title %}{{ recipe.title }}{% endblock %}
+{% block title %}{{ recipe.title }}{% endblock %}
 
 {% block content %}
-<!-- Display the recipe title -->
+<!-- Recipe title -->
 <h1>{{ recipe.title }}</h1>
 
+<!-- Author and timestamp -->
 <div style="display: flex; align-items: center; gap: 10px; font-size: 0.9em; color: #666; margin-top: -8px; margin-bottom: 16px;">
     {% set profile_img = recipe.user.profile.image_filename if recipe.user.profile and recipe.user.profile.image_filename else 'default_profile.png' %}
-
     <img src="{{ url_for('static', filename='uploads/' + profile_img) }}"
          alt="Profile image"
          style="width: 48px; height: 48px; object-fit: cover; border-radius: 50%;">
-
     <span>
         By <a href="{{ url_for('public_profile', user_id=recipe.user.id) }}">{{ recipe.user.username }}</a>
         &nbsp;|&nbsp; {{ recipe.created.strftime('%B %d, %Y at %I:%M %p') }}
     </span>
 </div>
 
-<!-- Show recipe image if it exists -->
+<!-- Recipe image -->
 {% if recipe.image_filename %}
     <img src="{{ url_for('static', filename='uploads/' + recipe.image_filename) }}" 
          alt="{{ recipe.title }}" 
          style="width: 100%; max-width: 600px; height: auto; margin-top: 16px; border-radius: 8px;">
 {% endif %}
 
-<!-- Recipe description -->
+<!-- Description -->
 <p><strong>Description:</strong> {{ recipe.description }}</p>
 
-<!-- Ingredients section (if any), shown as a list -->    
+<!-- Ingredients -->
 {% if recipe.ingredients %}
     <p><strong>Ingredients:</strong></p>
     <ul>
@@ -39,76 +37,112 @@
     </ul>
 {% endif %}
 
-<!-- Instructions section (if any), shown as an ordered list -->
+<!-- Instructions -->
 {% if recipe.instructions %}
     <p><strong>Instructions:</strong></p>
     <ol>
-        {% for instruction in recipe.instructions.split('\n') %}
-            <li>{{ instruction }}</li>
+        {% for step in recipe.instructions.split('\n') %}
+            <li>{{ step }}</li>
         {% endfor %}
     </ol>
 {% endif %}
 
-<!-- Show Edit and Delete options if the current user is the recipe's author -->
+<!-- Edit/Delete if user is author -->
 {% if current_user.is_authenticated and current_user.id == recipe.user_id %}
     <div style="margin-top: 20px;">
-        <!-- Delete recipe form (POST) -->
         <form action="{{ url_for('delete_recipe', id=recipe.id) }}" method="POST" style="display:inline;">
             <button type="submit">Delete</button>
         </form>
-
-        <!-- Link to edit the recipe -->
         <a href="{{ url_for('edit_recipe', id=recipe.id) }}">
             <button style="margin-left: 10px;">Edit</button>
         </a>
     </div>
 {% endif %}
 
-<!-- Display average rating if available -->
-<p><strong>Average Rating:</strong>
-    {% if recipe.average_rating %}
-        {{ recipe.average_rating }} / 5 ({{ recipe.rating_count }} ratings)
-    {% else %}
-        Not rated yet
-    {% endif %}
-</p>
-
-<!-- Rating submission form -->
-<form action="{{ url_for('rate_recipe', id=recipe.id) }}" method="POST">
-    <label for="rating">Rate this recipe:</label>
-    <select name="rating" id="rating">
-        <option value="1">1 ★</option>
-        <option value="2">2 ★</option>
-        <option value="3">3 ★</option>
-        <option value="4">4 ★</option>
-        <option value="5">5 ★</option>
-    </select>
-    <button type="submit">Submit Rating</button>
-</form>
-    
-<!-- Comment submission form (logged in users only) -->
-{% if current_user.is_authenticated %}
-<form method="POST">
-	<p><strong>
-		Comment:</strong>
-	{{ form.comment }} 
-	{{ form.submit() }}
-	</p>
+<!-- Star-based average rating display -->
+{% if recipe.average_rating %}
+<div style="display: flex; align-items: center; gap: 8px; font-size: 1.2em; margin: 20px 0 10px;">
+    <span><strong>{{ recipe.average_rating }}</strong></span>
+    <span style="color: #FFA41C;">
+        {% for i in range(1, 6) %}
+            {% if recipe.average_rating >= i %}
+                ★
+            {% elif recipe.average_rating > i - 1 %}
+                <span style="position: relative; display: inline-block;">
+                    <span style="color: #FFA41C;">★</span>
+                    <span style="position: absolute; left: 0; color: lightgray; width: 50%; overflow: hidden;">★</span>
+                </span>
+            {% else %}
+                <span style="color: lightgray;">★</span>
+            {% endif %}
+        {% endfor %}
+    </span>
+    <span style="font-size: 0.9em; color: #007185;">({{ recipe.rating_count }})</span>
+</div>
+{% else %}
+<p style="font-style: italic;">Not rated yet</p>
 {% endif %}
 
-<!-- List of existing comments --!>
-	<div class="comment-grid"
-	     style=
-	           "background-color":#DC6433
-		   "color":#FBDB92>
+<!-- Rating form -->
+{% if current_user.is_authenticated %}
+<form action="{{ url_for('rate_recipe', id=recipe.id) }}" method="POST" style="margin-bottom: 20px;">
+    <label for="rating"><strong>Rate this recipe:</strong></label>
+    <select name="rating" id="rating" style="font-size: 1em; padding: 4px 6px; margin: 0 8px;">
+        {% for i in range(1, 6) %}
+            <option value="{{ i }}">{{ i }} ★</option>
+        {% endfor %}
+    </select>
+    <button type="submit" style="
+        background-color: #FFA41C;
+        border: none;
+        padding: 6px 12px;
+        color: white;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+    ">Submit Rating</button>
+</form>
+{% endif %}
+
+<!-- Comment form -->
+{% if current_user.is_authenticated %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.comment.label }}<br>
+        {{ form.comment(rows=3, cols=60) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% else %}
+    <p><em>Log in to leave a comment.</em></p>
+{% endif %}
+
+<!-- Comment list -->
+<h3>Comments</h3>
+<div style="margin-top: 20px;">
     {% for comment in comments %}
-    <em>{{ comment.commenter }} | {{ comment.created }}</em><br>
-	{{ comment.comment_text }}
-
-    {% endfor %}
+        <div style="
+            background-color: #FBDB92;
+            color: #282B28;
+            margin-bottom: 16px;
+            padding: 14px 18px;
+            border-left: 5px solid #dc6434;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        ">
+            <div style="font-weight: bold; font-size: 0.95em; margin-bottom: 4px;">
+                {{ comment.commenter }}
+                <span style="font-style: italic; font-weight: normal; margin-left: 8px;">
+                    {{ comment.created.strftime('%B %d, %Y %I:%M %p') }}
+                </span>
+            </div>
+            <p style="margin: 0;">{{ comment.comment_text }}</p>
         </div>
-
-
+    {% else %}
+        <p style="font-style: italic;">No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
 {% endblock %}
 
 

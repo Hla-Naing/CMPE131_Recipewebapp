@@ -62,4 +62,8 @@ class Comment(db.Model):
     commenter = db.Column(db.String(20), nullable=False)
     comment_text = db.Column(db.Text, nullable=False)
     created = db.Column(db.DateTime, default=get_local_time)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), nullable=False)
+    recipe_id = db.Column(
+        db.Integer,
+        db.ForeignKey('recipe.id', name='fk_comment_recipe_id'),
+        nullable=False
+    )

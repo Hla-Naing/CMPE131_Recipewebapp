@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 from sqlalchemy import or_
 from . import app, db, login_manager
-from .models import User, Recipe, Profile
+from .models import User, Recipe, Profile, Comment
 from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm, CommentForm
 
 # Helper function to save and resize uploaded images
@@ -133,21 +133,39 @@ def make_recipe():
     return render_template('new_recipe.html', form=form)
 
 # Display a single recipe's detail page with any additional comments
+# @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
+# def recipe_details(id):
+#     recipe = Recipe.query.get_or_404(id)
+#     form = CommentForm()
+#     if form.validate_on_submit():
+#         new_comment = Comment(
+#                 commenter=current_user.username,
+#                 comment_text=form.comment.data
+#         )
+#         db.session.add(new_comment)
+#         db.session.commit()
+#         flash('Comment posted successfully!', 'success')
+#         return redirect('/recipe/<int:id>')
+#     return render_template('recipe_details.html', recipe=recipe, form=form)
 @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
 def recipe_details(id):
     recipe = Recipe.query.get_or_404(id)
+    comments = Comment.query.filter_by(recipe_id=recipe.id).order_by(Comment.created.desc()).all()
+
     form = CommentForm()
-    if form.validate_on_submit():
+    
+    if current_user.is_authenticated and form.validate_on_submit():
         new_comment = Comment(
-                commenter=current_user.username,
-                comment_text=form.comment.data
+            commenter=current_user.username,
+            comment_text=form.comment.data,
+            recipe_id=recipe.id  # associate comment with this recipe
         )
         db.session.add(new_comment)
         db.session.commit()
         flash('Comment posted successfully!', 'success')
-        return redirect('/recipe/<int:id>')
-    return render_template('recipe_details.html', recipe=recipe, form=form)
+        return redirect(url_for('recipe_details', id=recipe.id))
 
+    return render_template('recipe_details.html', recipe=recipe, form=form, comments=comments)
 # Edit an existing recipe (only allowed by the owner)
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 @login_required
