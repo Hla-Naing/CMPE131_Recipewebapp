@@ -9,7 +9,7 @@ from PIL import Image
 from sqlalchemy import or_
 from . import app, db, login_manager
 from .models import User, Recipe, Profile, Comment, Tag
-from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm, CommentForm
+from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm, CommentForm, PasswordHintForm
 
 # Helper function to save and resize uploaded images
 def save_resized_image(image_file, filename, size=(300, 300)):
@@ -102,6 +102,22 @@ def register():
         flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
+
+# Forgot password logic
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    form = PasswordHintForm()
+    hint = None
+    error = None
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data, email=form.email.data).first()
+        if user:
+            hint = user.password[:3] + '*' * (len(user.password) - 3)
+        else:
+            error = "No account found with that username and email."
+
+    return render_template('forgot_password.html', form=form, hint=hint, error=error)
 
 # Authenticated user's personal recipe dashboard
 @app.route('/recipes')

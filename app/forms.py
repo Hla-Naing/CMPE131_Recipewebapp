@@ -76,6 +76,12 @@ class ProfileForm(FlaskForm):
     image = FileField('Upload New Profile Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Update Profile')
 
+# Form to get a password hint
+class PasswordHintForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Get Password Hint')
+
 # Form for logged in users to add comments to a recipe
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment Text',validators=[DataRequired(), Length(min=10)])
