@@ -15,6 +15,7 @@
 - The system allows users to view all the recipes saved in the database.
 - The system allows the users to Filter recipes depending on the category.
 - The system allows the user to search for recipe by titles
+- The user can submit images of completed recipes.
 
 **EXTRA Functional Requirements:**
 - The system shall ensure that the user's password meets predefined strength criteria.
@@ -328,3 +329,19 @@ Alternate Sequence:
   3. User can rewrite the entry for one of the boxes. 
   4. System displays error message if value is invalid or same as before. 
   5. User can rewrite entry again or select a different box.
+
+Recipe Images
+Pre-condition: The owner of the profile has a preexisting account and is looking at an existing recipe.
+Trigger: From a recipe, user selects “add image” button. 
+Primary Sequence:
+  1. User selects “Add Image” button. 
+  2. System opens computer directory to access the user’s saved images. 
+  3. User selects a single image of compatible type.
+  4. System displays a preview of selected image.
+  5. User confirms image can be added to server.
+  6. System saves image within database.
+Primary Postconditions: 
+  1. System displays image with other user-submitted content on specific recipe page.
+Alternate Sequence: If image is not able to be uploaded
+  1. System displays a placeholder image and error message that the image could not be attached.
+  2. User can select another compatible image or cancel action.
