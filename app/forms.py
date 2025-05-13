@@ -2,8 +2,9 @@
 # Import necessary form classes and validators from Flask-WTF and WTForms
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField,SelectMultipleField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
+from wtforms.widgets import ListWidget, CheckboxInput
 
 # Import the User model for validation checks
 from .models import User
@@ -17,6 +18,11 @@ def password_requirements(form, field):
         raise ValidationError('Password must have at least one uppercase letter.')
     if not any(c.isdigit() for c in pw):
         raise ValidationError('Password must have at least one number.')
+
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
 
 # Form for user registration
 class RegistrationForm(FlaskForm):
@@ -53,6 +59,8 @@ class RecipeForm(FlaskForm):
     image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     remove_image = BooleanField('Remove current image') 
     submit = SubmitField('Submit Recipe')
+    tags = MultiCheckboxField('Tags', coerce=int)
+
 
 # Form to collect visitor emails before allowing recipe viewing
 class VisitorEmailForm(FlaskForm):

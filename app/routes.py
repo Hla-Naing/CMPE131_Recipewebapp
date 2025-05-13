@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 from sqlalchemy import or_
 from . import app, db, login_manager
-from .models import User, Recipe, Profile, Comment
+from .models import User, Recipe, Profile, Comment, Tag
 from .forms import RegistrationForm, LoginForm, RecipeForm, VisitorEmailForm, ProfileForm, CommentForm
 
 # Helper function to save and resize uploaded images
@@ -50,10 +50,18 @@ def inject_user():
     return dict(current_user=current_user)
 
 # Home page route that displays all recipes (for general viewing)
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET'])
 def home():
-    recipes = Recipe.query.order_by(Recipe.title.asc()).all()
-    return render_template('home.html', recipes=recipes)
+    selected_tag = request.args.get('tag')
+    tags = Tag.query.all()
+
+    if selected_tag:
+        recipes = Recipe.query.join(Recipe.tags).filter(Tag.name == selected_tag).all()
+    else:
+        recipes = Recipe.query.order_by(Recipe.title.asc()).all()
+
+    return render_template('home.html', recipes=recipes, tags=tags, selected_tag=selected_tag)
+
 
 # Visitor-facing recipe browsing with optional search
 @app.route('/visitor_recipes')
@@ -109,6 +117,8 @@ def recipes():
 @login_required
 def make_recipe():
     form = RecipeForm()
+    form.tags.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
+
     if form.validate_on_submit():
         image_file = form.image.data
         filename = None
@@ -125,6 +135,11 @@ def make_recipe():
             image_filename=filename, 
             user_id=current_user.id
         )
+        for tag_id in form.tags.data:
+            tag = Tag.query.get(tag_id)
+            if tag:
+                recipe.tags.append(tag)
+
         db.session.add(recipe)
         db.session.commit()
         flash('Recipe created successfully!', 'success')
@@ -133,20 +148,6 @@ def make_recipe():
     return render_template('new_recipe.html', form=form)
 
 # Display a single recipe's detail page with any additional comments
-# @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
-# def recipe_details(id):
-#     recipe = Recipe.query.get_or_404(id)
-#     form = CommentForm()
-#     if form.validate_on_submit():
-#         new_comment = Comment(
-#                 commenter=current_user.username,
-#                 comment_text=form.comment.data
-#         )
-#         db.session.add(new_comment)
-#         db.session.commit()
-#         flash('Comment posted successfully!', 'success')
-#         return redirect('/recipe/<int:id>')
-#     return render_template('recipe_details.html', recipe=recipe, form=form)
 @app.route('/recipe/<int:id>', methods=['GET', 'POST'])
 def recipe_details(id):
     recipe = Recipe.query.get_or_404(id)
@@ -166,6 +167,7 @@ def recipe_details(id):
         return redirect(url_for('recipe_details', id=recipe.id))
 
     return render_template('recipe_details.html', recipe=recipe, form=form, comments=comments)
+
 # Edit an existing recipe (only allowed by the owner)
 @app.route('/edit_recipe/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -178,19 +180,33 @@ def edit_recipe(id):
     form = RecipeForm(obj=recipe)
     form.image.label.text = 'Replace Image'
 
+    # Populate available tag choices
+    form.tags.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
+
+    # Pre-select the current tags when loading the form
+    if request.method == 'GET':
+        form.tags.data = [tag.id for tag in recipe.tags]
+
     if form.validate_on_submit():
         recipe.title = form.title.data
         recipe.description = form.description.data
         recipe.ingredients = form.ingredients.data
         recipe.instructions = form.instructions.data
-        
-        # Handle new image upload
+
+        # Update tags
+        recipe.tags = []  # Clear existing tags
+        for tag_id in form.tags.data:
+            tag = Tag.query.get(tag_id)
+            if tag:
+                recipe.tags.append(tag)
+
+        # Handle image replacement
         if form.image.data:
             filename = secure_filename(form.image.data.filename)
             save_resized_image(form.image.data, filename, size=(300, 300))
             recipe.image_filename = filename
 
-        # Handle "remove image" checkbox
+        # Handle image removal
         elif form.remove_image.data and recipe.image_filename:
             image_path = os.path.join(app.root_path, 'static/uploads', recipe.image_filename)
             if os.path.exists(image_path):
@@ -202,6 +218,7 @@ def edit_recipe(id):
         return redirect(url_for('recipes'))
 
     return render_template('edit_recipe.html', form=form, recipe=recipe)
+
 
 # Delete a recipe (only allowed by the owner)
 @app.route('/delete_recipe/<int:id>', methods=['POST'])

@@ -12,6 +12,12 @@ favorites = db.Table('favorites',
     db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'))
 )
 
+# Association table for recipe-tag many-to-many
+recipe_tags = db.Table('recipe_tags',
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
 # Callback function for Flask-Login to load a user by ID
 @login_manager.user_loader
 def load_user(user_id):
@@ -52,6 +58,12 @@ class Recipe(db.Model):
     rating_count = db.Column(db.Integer, default=0)
     user = db.relationship('User', backref=db.backref('user_recipes', lazy=True), overlaps="author,recipes")
     comments = db.relationship('Comment', backref=db.backref('recipe', lazy=True)) #Relationship to comments (one-to-many)
+    tags = db.relationship(
+        'Tag',
+        secondary=recipe_tags,
+        backref=db.backref('recipes', lazy='dynamic'),
+        lazy='dynamic'
+    )
 
     # Calculates and returns average rating, or None if no ratings
     @property
@@ -81,3 +93,7 @@ class Comment(db.Model):
         db.ForeignKey('recipe.id', name='fk_comment_recipe_id'),
         nullable=False
     )
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32), unique=True, nullable=False)

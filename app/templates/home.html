@@ -4,6 +4,17 @@
 {% block content %}
 <h1>Welcome to the Recipe App!</h1>
 
+<!-- Tag Filter Dropdown -->
+<form method="GET" action="{{ url_for('home') }}" style="margin: 20px 0;">
+    <label for="tag">Filter by tag:</label>
+    <select name="tag" id="tag" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for tag in tags %}
+            <option value="{{ tag.name }}" {% if selected_tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>
+        {% endfor %}
+    </select>
+</form>
+
 <style>
     .recipe-grid {
         display: flex;
@@ -78,6 +89,15 @@
             </div>
 
             <div class="recipe-title">{{ recipe.title }}</div>
+                {% if recipe.tags %}
+                    <div style="font-size: 0.85em; color: #4A8451; text-align: center; margin-top: 4px;">
+                        {% for tag in recipe.tags %}
+                            <span style="background-color: #f0f0f0; padding: 2px 6px; border-radius: 5px; margin: 0 2px;">
+                                {{ tag.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                 {% endif %}
 
             {% if recipe.average_rating %}
             <div class="stars">
@@ -98,5 +118,7 @@
         </a>
     {% endfor %}
 </div>
+
+
 {% endblock %}
 
