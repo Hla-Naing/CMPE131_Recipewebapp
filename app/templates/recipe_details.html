@@ -143,6 +143,19 @@
         <p style="font-style: italic;">No comments yet. Be the first to comment!</p>
     {% endfor %}
 </div>
+
+<!-- Saving favorites -->
+    {% if current_user.is_authenticated %}
+        <form method="POST" action="{% if recipe in current_user.favorites %}{{ url_for('unfavorite_recipe', recipe_id=recipe.id) }}{% else %}{{ url_for('favorite_recipe', recipe_id=recipe.id) }}{% endif %}">
+            <button type="submit" style="margin-top: 10px; background-color: #4D96FF; color: white; border: none; padding: 6px 12px; border-radius: 4px;">
+                {% if recipe in current_user.favorites %}
+                    ★ Unfavorite
+                {% else %}
+                    ☆ Save to Favorites
+                {% endif %}
+            </button>
+        </form>
+    {% endif %}
 {% endblock %}
 
 

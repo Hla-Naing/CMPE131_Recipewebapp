@@ -2,7 +2,7 @@
 # Import required modules for routing, forms, database, file handling, etc.
 import os
 import random
-from flask import Flask, render_template, redirect, url_for, flash, session, request
+from flask import Flask, abort, render_template, redirect, url_for, flash, session, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
 from PIL import Image
@@ -304,3 +304,28 @@ def rate_recipe(id):
 @app.route('/about')
 def about_us():
     return render_template('about_us.html')
+
+@app.route('/favorite/<int:recipe_id>', methods=['POST'])
+@login_required
+def favorite_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if not current_user.favorites.filter_by(id=recipe.id).first():
+        current_user.favorites.append(recipe)
+        db.session.commit()
+        flash('Recipe added to favorites!', 'success')
+    return redirect(url_for('recipe_details', id=recipe.id))
+
+@app.route('/unfavorite/<int:recipe_id>', methods=['POST'])
+@login_required
+def unfavorite_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if current_user.favorites.filter_by(id=recipe.id).first():
+        current_user.favorites.remove(recipe)
+        db.session.commit()
+        flash('Recipe removed from favorites.', 'info')
+    return redirect(url_for('recipe_details', id=recipe.id))
+
+@app.route('/favorites')
+@login_required
+def view_favorites():
+    return render_template('favorites.html', recipes=current_user.favorites.all())

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}My Favorites{% endblock %}
+{% block content %}
+<h2>Your Favorite Recipes</h2>
+{% if recipes %}
+    <ul>
+        {% for recipe in recipes %}
+            <li><a href="{{ url_for('recipe_details', id=recipe.id) }}">{{ recipe.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven’t saved any recipes yet.</p>
+{% endif %}
+{% endblock %}

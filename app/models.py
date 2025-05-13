@@ -5,6 +5,13 @@ from flask_login import UserMixin
 from datetime import datetime
 import pytz
 
+
+# Association table for favorites
+favorites = db.Table('favorites',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'))
+)
+
 # Callback function for Flask-Login to load a user by ID
 @login_manager.user_loader
 def load_user(user_id):
@@ -18,11 +25,18 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)  # Hashed password
     recipes = db.relationship('Recipe', backref='author', lazy=True, overlaps="user,user_recipes")
     profile = db.relationship('Profile', backref='user', uselist=False)  # Relationship to profile (one-to-one)
+    favorites = db.relationship(
+        'Recipe',
+        secondary=favorites,
+        backref=db.backref('favorited_by', lazy='dynamic'),
+        lazy='dynamic'
+    )
 
 # Helper function to return current time in a specific timezone
 def get_local_time():
     tz = pytz.timezone('America/Los_Angeles')  
     return datetime.now(tz)
+
 
 # Recipe model representing submitted recipes
 class Recipe(db.Model):
