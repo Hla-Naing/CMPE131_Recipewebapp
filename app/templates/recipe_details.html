@@ -96,7 +96,7 @@
         background-color: #4A8451;
         border: none;
         padding: 6px 12px;
-        color: #FBDB92;
+        color: #FFFFFF;
         font-weight: bold;
         border-radius: 4px;
         cursor: pointer;
@@ -147,7 +147,7 @@
 <!-- Saving favorites -->
     {% if current_user.is_authenticated %}
         <form method="POST" action="{% if recipe in current_user.favorites %}{{ url_for('unfavorite_recipe', recipe_id=recipe.id) }}{% else %}{{ url_for('favorite_recipe', recipe_id=recipe.id) }}{% endif %}">
-            <button type="submit" style="margin-top: 10px; background-color: #4A8451; color: #FBDB92; border: none; padding: 6px 12px; border-radius: 4px;">
+            <button type="submit" style="margin-top: 10px; background-color: #4A8451; color: #FFFFFF; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
                 {% if recipe in current_user.favorites %}
                     ★ Unfavorite
                 {% else %}
@@ -157,5 +157,3 @@
         </form>
     {% endif %}
 {% endblock %}
-
-
