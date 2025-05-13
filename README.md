@@ -1,4 +1,4 @@
-CMPE131_Recipewebapp Team 4
+**CMPE131_Recipewebapp Team 4**
 - Cedric (@cvmaceda/cedrim)
 - Hla/Maria (@Hla-Naing)
 - Daniel (@dannyvasq)
@@ -24,6 +24,8 @@ Each user can edit their own recipes (‘/edit_recipe/int:id’) and specific us
 When finished, the user can then end their session by going to ‘/logout’.
 
 Other files contained in this package include "requirements.md" (listing the functional requirements each team member contributes to) and "meetings.md" (listing some team meetings and progress).
+
+**Project Demo Video:** https://drive.google.com/file/d/1gAmMXXw0usLm5PjaZvfuvemfAgF9jgI5/view?usp=drive_link
 
 **Ethical Considerations (1):** When building this food recipe web app, I have to think about doing things the right way. 
 First, I need to keep user information safe. I’ll use Flask-Login so people have to log in before they can add or change recipes, and I’ll validate every form with Flask-WTF so no one can sneak in bad data or break the database. 
